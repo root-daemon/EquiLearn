@@ -48,7 +48,7 @@ const Home = async () => {
         </div>
       </div>
       {/* splash */}
-      <div className="bg-green-500 h-[35vh] p-10 w-full flex flex-col gap-4 justify-end rounded-2xl">
+      <div className="bg-[#9F85EE] h-[35vh] p-10 w-full flex flex-col gap-4 justify-end rounded-2xl">
         <h1 className="text-2xl text-white font-bold w-1/2">
           Welcome to UniVision
         </h1>
