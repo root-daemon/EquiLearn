@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
+import { AppCalendar } from "@/components/app-calendar";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,12 +28,32 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <main className="flex w-full min-h-screen overflow-hidden">
+            <SidebarProvider className=" relative  border w-fit">
+              <AppSidebar />
+              <SidebarTrigger className="z-10 fixed left-0" />
+            </SidebarProvider>
+
+            {children}
+
+            <SidebarProvider
+              className="border w-fit"
+              style={{
+                "--sidebar-width": "20rem",
+                "--sidebar-width-mobile": "20rem",
+              }}
+            >
+              <AppCalendar />
+              <SidebarTrigger className="z-10 fixed right-0" />
+            </SidebarProvider>
+          </main>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
