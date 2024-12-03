@@ -10,8 +10,10 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarFooter,
 } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
+import { UserButton } from "@clerk/nextjs";
 
 // Menu items.
 const items = [
@@ -46,7 +48,11 @@ export function AppSidebar() {
   const pathname = usePathname();
   console.log(pathname);
   const authRoutes =
-    pathname === "/" || pathname === "/sign-in" || pathname === "/sign-up"
+    pathname === "/" ||
+    pathname === "/sign-in" ||
+    pathname === "/sign-up" ||
+    pathname === "/astigmatism" ||
+    pathname === "/glaucoma"
       ? true
       : false;
 
@@ -56,7 +62,7 @@ export function AppSidebar() {
     <Sidebar className="">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-xl text-black font-bold my-4">
+          <SidebarGroupLabel className="text-3xl text-black font-bold my-4 ml-4">
             UniVision
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -92,6 +98,9 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter className="flex w-full p-4 justify-start items-start border">
+        <UserButton />
+      </SidebarFooter>
     </Sidebar>
   );
 }

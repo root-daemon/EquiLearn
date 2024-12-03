@@ -21,19 +21,20 @@ function Calendar({
       className={cn("p-3", className)}
       classNames={{
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
-        month: "space-y-4 text-white",
+        month: "space-y-4 text-[#160B38]",
         caption: "flex justify-center pt-1 relative items-center",
         caption_label: "text-sm font-medium",
         nav: "space-x-1 flex items-center",
         nav_button: cn(
           buttonVariants({ variant: "default" }),
-          "h-7 w-7 bg-transparent p-0 hover:bg-transparent "
+          "h-7 w-7 bg-[#160B38] p-0 hover:bg-[#160B38]  "
         ),
-        nav_button_previous: "absolute left-1 text-white",
-        nav_button_next: "absolute right-1 text-white",
+        nav_button_previous: "absolute left-1 text-[#160B38] bg",
+        nav_button_next: "absolute right-1 text-[#160B38]",
         table: "w-full border-collapse space-y-1",
         head_row: "flex",
-        head_cell: "text-white/50 rounded-full w-8 font-normal text-[0.8rem]",
+        head_cell:
+          "text-[#160B38]/50 rounded-full w-8 font-normal text-[0.8rem]",
         row: "flex w-full mt-2",
         cell: cn(
           "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-[#7C59E9] [&:has([aria-selected].day-outside)]:bg-[#7C59E9] [&:has([aria-selected].day-range-end)]:rounded-r-full",
@@ -43,7 +44,7 @@ function Calendar({
         ),
         day: cn(
           buttonVariants({ variant: "ghost" }),
-          "h-8 w-8 p-0 font-normal rounded-full aria-selected:opacity-100 text-white"
+          "h-8 w-8 p-0 font-normal rounded-full aria-selected:opacity-100 text-[#160B38]"
         ),
         day_range_start: "day-range-start",
         day_range_end: "day-range-end",

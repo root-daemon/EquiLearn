@@ -11,7 +11,7 @@ const CourseCard = ({
 }) => {
   console.log(image);
   return (
-    <div className="flex flex-col justify-start items-start h-[350px] w-[300px] p-5 gap-3 rounded-3xl border">
+    <div className="flex flex-col justify-start items-start h-[350px] w-[300px] p-5 gap-3 rounded-3xl border bg-white">
       <div className="h-[60%] w-full rounded-3xl border">
         <img src={image} alt="" className="rounded-3xl h-full w-full" />
       </div>

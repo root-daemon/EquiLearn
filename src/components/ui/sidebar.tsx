@@ -267,7 +267,11 @@ const SidebarTrigger = React.forwardRef<
   const { toggleSidebar } = useSidebar();
   const pathname = usePathname();
   const authRoutes =
-    pathname === "/" || pathname === "/sign-in" || pathname === "/sign-up"
+    pathname === "/" ||
+    pathname === "/sign-in" ||
+    pathname === "/sign-up" ||
+    pathname === "/astigmatism" ||
+    pathname === "/glaucoma"
       ? true
       : false;
 

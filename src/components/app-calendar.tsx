@@ -20,7 +20,11 @@ export function AppCalendar() {
   console.log(pathname);
   const [date, setDate] = useState<Date | undefined>(new Date());
   const authRoutes =
-    pathname === "/" || pathname === "/sign-in" || pathname === "/sign-up"
+    pathname === "/" ||
+    pathname === "/sign-in" ||
+    pathname === "/sign-up" ||
+    pathname === "/astigmatism" ||
+    pathname === "/glaucoma"
       ? true
       : false;
 
@@ -28,12 +32,12 @@ export function AppCalendar() {
     ""
   ) : (
     <Sidebar side="right" className="p-0">
-      <SidebarContent className="bg-[#160B38] ">
+      <SidebarContent className="bg-[#] ">
         <SidebarGroup className="p-0">
           <SidebarGroupContent>
             <PomodoroTimer />
             <div className="flex flex-col gap-6 justify-center items-center p-5">
-              <h1 className="text-white text-2xl font-semibold justify-self-start self-start">
+              <h1 className="text-[#160B38] text-2xl font-semibold justify-self-start self-start">
                 Calendar
               </h1>
               <Calendar

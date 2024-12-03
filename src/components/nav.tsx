@@ -18,7 +18,12 @@ export function Nav() {
           Accessibility
         </Link>
         <Button variant="outline">Sign up</Button>
-        <Button>Dashboard</Button>
+        <Button>
+          {" "}
+          <Link href="/dashboard" className="">
+            Dashboard
+          </Link>
+        </Button>
       </div>
     </nav>
   );

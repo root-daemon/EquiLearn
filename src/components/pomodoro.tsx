@@ -39,7 +39,7 @@ export default function PomodoroTimer() {
     if (isActive && time > 0) {
       interval = setInterval(() => {
         setTime((prevTime) => prevTime - 1);
-      }, 1000);
+      }, 100);
     } else if (time === 0) {
       setIsActive(false);
       switchMode();
@@ -57,15 +57,15 @@ export default function PomodoroTimer() {
     : (WORK_TIME - time) / WORK_TIME;
 
   return (
-    <Card className="w-full max-w-md mx-auto bg-transparent border-none">
+    <Card className="w-full max-w-md mx-auto bg-transparent border-none shadow-none">
       <CardHeader>
-        <CardTitle className="text-2xl text-white font-bold text-center">
+        <CardTitle className="text-2xl text-black font-bold text-center">
           {isBreak ? "Break Time" : "Pomodoro Timer"}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col items-center">
         <CircularProgress progress={progress} />
-        <div className="text-4xl text-white font-bold mt-4">
+        <div className="text-4xl text-black font-bold mt-4">
           {minutes.toString().padStart(2, "0")}:
           {seconds.toString().padStart(2, "0")}
         </div>
@@ -73,19 +73,19 @@ export default function PomodoroTimer() {
       <CardFooter className="flex justify-center space-x-2">
         <Button
           onClick={toggleTimer}
-          className="text-[#160B38] bg-white hover:bg-white"
+          className="bg-[#160B38] hover:bg-[#160B38]"
         >
           {isActive ? "Pause" : "Start"}
         </Button>
         <Button
           onClick={resetTimer}
-          className="text-[#160B38] bg-white hover:bg-white"
+          className="bg-[#160B38] hover:bg-[#160B38] "
         >
           Reset
         </Button>
         <Button
           onClick={switchMode}
-          className="text-[#160B38] bg-white hover:bg-white"
+          className="bg-[#160B38] hover:bg-[#160B38] "
         >
           {isBreak ? " Work" : " Break"}
         </Button>
@@ -108,7 +108,7 @@ function CircularProgress({ progress }: CircularProgressProps) {
   return (
     <svg height={radius * 2} width={radius * 2}>
       <circle
-        stroke="#e5e7eb"
+        stroke="#160B38"
         fill="transparent"
         strokeWidth={strokeWidth}
         r={normalizedRadius}
@@ -117,7 +117,7 @@ function CircularProgress({ progress }: CircularProgressProps) {
       />
       <circle
         stroke="currentColor"
-        fill="transparent"
+        fill="#fff"
         strokeWidth={strokeWidth}
         strokeDasharray={circumference + " " + circumference}
         style={{
