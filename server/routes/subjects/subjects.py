@@ -66,3 +66,11 @@ async def delete_subject(email: str, slug: str):
                 status_code=200, content={"message": "Subject deleted successfully"}
             )
     raise HTTPException(status_code=404, detail="Subject not found")
+
+@subjects_router.get('/subjects')
+async def get_subjects(email: str):
+    user = db.User.find_one({"email":email})
+    if not user:
+        return JSONResponse(status_code=404, content={"message": "User not found"})
+    subject = user.get("subjects", [])
+    return JSONResponse({"message": "Subjects Fetched","subjects": subject})
