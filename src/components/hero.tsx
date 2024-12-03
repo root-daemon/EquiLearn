@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Eye, BookOpen, Youtube, FileText, BrainCircuit } from "lucide-react";
+import Link from "next/link";
 
 export function Hero() {
   return (
@@ -30,10 +31,12 @@ export function Hero() {
             summaries to flashcards, tailored to your learning style.
           </p>
           <div className="flex items-center justify-center gap-4 mb-8">
-            <Button size="lg" className="gap-2">
-              <BookOpen className="h-4 w-4" />
-              Go to Dashboard
-            </Button>
+            <Link href={"/dashboard"}>
+              <Button size="lg" className="gap-2">
+                <BookOpen className="h-4 w-4" />
+                Go to Dashboard
+              </Button>
+            </Link>
             <Button size="lg" variant="outline">
               View Demo
             </Button>

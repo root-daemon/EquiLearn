@@ -14,19 +14,13 @@ import {
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import PomodoroTimer from "./pomodoro";
+import { routeCheck } from "@/data/authRoutes";
 
 export function AppCalendar() {
   const pathname = usePathname();
   console.log(pathname);
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const authRoutes =
-    pathname === "/" ||
-    pathname === "/sign-in" ||
-    pathname === "/sign-up" ||
-    pathname === "/astigmatism" ||
-    pathname === "/glaucoma"
-      ? true
-      : false;
+  const authRoutes = routeCheck(pathname);
 
   return authRoutes ? (
     ""

@@ -19,6 +19,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { usePathname } from "next/navigation";
+import { routeCheck } from "@/data/authRoutes";
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -266,14 +267,7 @@ const SidebarTrigger = React.forwardRef<
 >(({ className, onClick, ...props }, ref) => {
   const { toggleSidebar } = useSidebar();
   const pathname = usePathname();
-  const authRoutes =
-    pathname === "/" ||
-    pathname === "/sign-in" ||
-    pathname === "/sign-up" ||
-    pathname === "/astigmatism" ||
-    pathname === "/glaucoma"
-      ? true
-      : false;
+  const authRoutes = routeCheck(pathname);
 
   return authRoutes ? (
     ""

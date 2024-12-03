@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
+import { routeCheck } from "@/data/authRoutes";
 
 // Menu items.
 const items = [
@@ -23,7 +24,7 @@ const items = [
     icon: Home,
   },
   {
-    title: "Inbox",
+    title: "Courses",
     url: "#",
     icon: Inbox,
   },
@@ -38,7 +39,7 @@ const items = [
     icon: Search,
   },
   {
-    title: "Settings",
+    title: "Account",
     url: "#",
     icon: Settings,
   },
@@ -47,14 +48,7 @@ const items = [
 export function AppSidebar() {
   const pathname = usePathname();
   console.log(pathname);
-  const authRoutes =
-    pathname === "/" ||
-    pathname === "/sign-in" ||
-    pathname === "/sign-up" ||
-    pathname === "/astigmatism" ||
-    pathname === "/glaucoma"
-      ? true
-      : false;
+  const authRoutes = routeCheck(pathname);
 
   return authRoutes ? (
     ""

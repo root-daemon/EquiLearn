@@ -18,14 +18,17 @@ const Home = async () => {
 
   const courses = [
     {
+      id: "operating-systems",
       title: "Operating Systems",
       topics: ["Mutex", "Semaphores", "Deadlocks"],
     },
     {
+      id: "data-structures",
       title: "Data Structures & Algos",
       topics: ["Prim's Algo", "Kruskal's Algo", "Djikstra's Algo"],
     },
     {
+      id: "computer-organisation",
       title: "Computer Organisation",
       topics: ["ARM", "Bus Architecture", "Memory"],
     },
@@ -72,6 +75,7 @@ const Home = async () => {
         {courses.map((course, idx) => (
           <CourseCard
             key={idx}
+            id={course.id}
             title={course.title}
             topics={course.topics}
             image={getRandomBackground()}

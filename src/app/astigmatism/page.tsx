@@ -73,13 +73,13 @@ export default function Dashboard() {
             </Button>
           </div>
 
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-2 gap-12">
             <Card className="bg-white">
               <CardHeader>
-                <CardTitle>Operating Systems</CardTitle>
+                <CardTitle className="">Operating Systems</CardTitle>
               </CardHeader>
               <CardContent>
-                <ul className="space-y-2 text-gray-600">
+                <ul className="space-y-6 text-gray-600">
                   <li>Mutex</li>
                   <li>Semaphores</li>
                 </ul>
