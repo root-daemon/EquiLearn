@@ -197,6 +197,7 @@ async def upload_file(file: UploadFile = File(...)):
     result = generator.process_large_text(text)
     return JSONResponse(content=result)
 
+
 @cards_router.post("/text/")
 async def upload(query: str):
     api_key = env.GEMINI_API_KEY
