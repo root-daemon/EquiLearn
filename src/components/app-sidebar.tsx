@@ -46,8 +46,9 @@ export function AppSidebar() {
   const pathname = usePathname();
   console.log(pathname);
   const authRoutes =
-    pathname === "/sign-in" || pathname === "/sign-up" ? true : false;
-  console.log(authRoutes);
+    pathname === "/" || pathname === "/sign-in" || pathname === "/sign-up"
+      ? true
+      : false;
 
   return authRoutes ? (
     ""

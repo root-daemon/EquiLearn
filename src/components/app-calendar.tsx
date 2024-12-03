@@ -20,7 +20,9 @@ export function AppCalendar() {
   console.log(pathname);
   const [date, setDate] = useState<Date | undefined>(new Date());
   const authRoutes =
-    pathname === "/sign-in" || pathname === "/sign-up" ? true : false;
+    pathname === "/" || pathname === "/sign-in" || pathname === "/sign-up"
+      ? true
+      : false;
 
   return authRoutes ? (
     ""
