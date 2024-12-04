@@ -124,7 +124,7 @@ export default function Dashboard() {
             <AddCourseModal email={email} />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="flex flex-wrap gap-6">
             {isLoading
               ? Array(2)
                   .fill(0)
