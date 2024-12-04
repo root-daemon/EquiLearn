@@ -9,6 +9,8 @@ import Link from "next/link";
 import useSWR, { SWRConfig } from "swr";
 import { Skeleton } from "@/components/ui/skeleton";
 import ReactMarkdown from "react-markdown";
+import axios from "axios";
+import { useUser } from "@clerk/nextjs";
 
 export default function CoursePage({
   params,
@@ -19,12 +21,13 @@ export default function CoursePage({
   const [showCardBack, setShowCardBack] = useState(false);
   const [currentCard, setCurrentCard] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState<number[]>([]);
+  const [email, setEmail] = useState<any>();
 
   const courseId = React.use(params).courseId;
 
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const { data, error, isLoading } = useSWR(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/subjects/iamsuhaybahmed%40gmail.com/${courseId}`,
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/subjects/${email}/${courseId}`,
     fetcher,
     {
       revalidateOnFocus: false,
@@ -63,6 +66,29 @@ export default function CoursePage({
   useEffect(() => {
     console.log(course?.videoId);
   }, [course]);
+
+  const { user } = useUser();
+
+  useEffect(() => {
+    const checkUserAndSetEmail = async () => {
+      if (user?.emailAddresses[0].emailAddress) {
+        const userEmail = user.emailAddresses[0].emailAddress;
+        setEmail(userEmail);
+
+        try {
+          const response = await axios.get("/api/check-user");
+          if (response.status === 200) {
+            console.log("User checked:", response.data.user);
+          }
+        } catch (error) {
+          console.error("Error checking user:", error);
+        }
+      }
+    };
+
+    checkUserAndSetEmail();
+  }, [user]);
+
   return (
     <SWRConfig
       value={{
