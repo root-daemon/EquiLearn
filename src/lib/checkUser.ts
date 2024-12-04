@@ -27,8 +27,11 @@ export const checkUser = async () => {
     data: {
       clerkId: user.id,
       email: user.emailAddresses[0].emailAddress,
+      subjects: [],
     },
   });
+
+  console.log(newUser);
 
   return newUser;
 };

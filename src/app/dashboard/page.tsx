@@ -8,6 +8,7 @@ import { AddCourseModal } from "@/components/add-course";
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
 import { Skeleton } from "@/components/ui/skeleton";
+import { checkUser } from "@/lib/checkUser";
 
 const Home = () => {
   const [subjects, setSubjects] = useState([]);
@@ -45,10 +46,23 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (user?.emailAddresses[0].emailAddress) {
-      const userEmail = user?.emailAddresses[0].emailAddress;
-      setEmail(userEmail);
-    }
+    const checkUserAndSetEmail = async () => {
+      if (user?.emailAddresses[0].emailAddress) {
+        const userEmail = user.emailAddresses[0].emailAddress;
+        setEmail(userEmail);
+
+        try {
+          const response = await axios.get("/api/check-user");
+          if (response.status === 200) {
+            console.log("User checked:", response.data.user);
+          }
+        } catch (error) {
+          console.error("Error checking user:", error);
+        }
+      }
+    };
+
+    checkUserAndSetEmail();
   }, [user]);
 
   useEffect(() => {

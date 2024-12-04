@@ -45,9 +45,23 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    if (user?.emailAddresses[0].emailAddress) {
-      setEmail(user.emailAddresses[0].emailAddress);
-    }
+    const checkUserAndSetEmail = async () => {
+      if (user?.emailAddresses[0].emailAddress) {
+        const userEmail = user.emailAddresses[0].emailAddress;
+        setEmail(userEmail);
+
+        try {
+          const response = await axios.get("/api/check-user");
+          if (response.status === 200) {
+            console.log("User checked:", response.data.user);
+          }
+        } catch (error) {
+          console.error("Error checking user:", error);
+        }
+      }
+    };
+
+    checkUserAndSetEmail();
   }, [user]);
 
   useEffect(() => {
