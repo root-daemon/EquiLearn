@@ -39,7 +39,7 @@ export default function PomodoroTimer() {
     if (isActive && time > 0) {
       interval = setInterval(() => {
         setTime((prevTime) => prevTime - 1);
-      }, 100);
+      }, 1000);
     } else if (time === 0) {
       setIsActive(false);
       switchMode();
