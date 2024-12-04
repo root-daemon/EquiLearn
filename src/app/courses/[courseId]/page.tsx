@@ -24,7 +24,7 @@ export default function CoursePage({
 
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const { data, error, isLoading } = useSWR(
-    `http://localhost:8000/subjects/iamsuhaybahmed%40gmail.com/${courseId}`,
+    `${process.env.NEXT_PUBLIC_SERVER_URL}subjects/iamsuhaybahmed%40gmail.com/${courseId}`,
     fetcher,
     {
       revalidateOnFocus: false,

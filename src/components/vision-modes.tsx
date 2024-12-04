@@ -12,6 +12,7 @@ const impairments = [
       "High contrast color schemes",
       "Simplified layouts",
     ],
+    image: "low",
   },
   {
     icon: Palette,
@@ -22,6 +23,7 @@ const impairments = [
       "Use of patterns and textures",
       "Clear labeling and icons",
     ],
+    image: "colorblind",
   },
   {
     icon: BookOpen,
@@ -32,6 +34,7 @@ const impairments = [
       "Increased line and letter spacing",
       "Customizable background colors",
     ],
+    image: "dyslexia",
   },
   {
     icon: Target,
@@ -42,6 +45,7 @@ const impairments = [
       "Enhanced navigation cues",
       "Adjustable text size and contrast",
     ],
+    image: "glaucoma",
   },
   {
     icon: Glasses,
@@ -52,6 +56,7 @@ const impairments = [
       "Adjustable line thickness",
       "High definition images and icons",
     ],
+    image: "astigmatism",
   },
 ];
 
@@ -109,7 +114,7 @@ export function VisionModes() {
                 </div>
                 <div className="mt-6">
                   <Image
-                    src={`/placeholder.svg?height=200&width=400&text=${impairment.name}`}
+                    src={`/${impairment.image}.jpeg`}
                     alt={`Visual representation for ${impairment.name}`}
                     width={400}
                     height={200}
