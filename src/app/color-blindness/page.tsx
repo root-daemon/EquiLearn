@@ -1,9 +1,60 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
+import axios from "axios";
 import { Bell, Calendar, Home, Inbox, Search, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { AddCourseModal } from "@/components/add-course";
+import CourseCard from "@/components/course-card";
 
 export default function Dashboard() {
+  const [subjects, setSubjects] = useState([]);
+  const [email, setEmail] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { user } = useUser();
+
+  const getRandomBackground = () => {
+    const backgrounds = ["bg-orange-200", "bg-green-200"];
+    return backgrounds[Math.floor(Math.random() * backgrounds.length)];
+  };
+
+  const getCourses = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/subjects/subjects`,
+        {
+          params: { email },
+        }
+      );
+
+      if (response.status === 200) {
+        setSubjects(response.data.subjects);
+      }
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (user?.emailAddresses[0].emailAddress) {
+      setEmail(user.emailAddresses[0].emailAddress);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (email) {
+      getCourses();
+    }
+  }, [email]);
+
   return (
     <div className="flex min-h-screen w-full bg-green-50">
       {/* Left Sidebar */}
@@ -60,6 +111,8 @@ export default function Dashboard() {
               placeholder="Search Here"
               className="w-64 border-green-300 placeholder-green-400 focus:border-orange-400 focus:ring-orange-400"
               aria-label="Search"
+              spellCheck="false"
+              data-ms-editor="true"
             />
             <Button
               variant="ghost"
@@ -92,44 +145,29 @@ export default function Dashboard() {
         {/* Courses Section */}
         <div className="mb-6 flex items-center justify-between">
           <h3 className="text-2xl font-bold text-green-800">My Courses</h3>
-          <Button
-            variant="outline"
-            className="border-orange-500 text-orange-600 hover:bg-orange-50 hover:text-orange-700"
-          >
-            Add Courses
-          </Button>
+          <AddCourseModal email={email} />
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          <Card className="border-green-200">
-            <CardContent className="p-6">
-              <div className="mb-4 h-40 rounded-lg bg-orange-200" />
-              <CardTitle className="mb-2 font-bold text-green-800">
-                Operating Systems
-              </CardTitle>
-              <div className="space-y-1 text-sm text-green-600">
-                <p>
-                  <strong className="text-green-700">Topics:</strong> Mutex,
-                  Semaphores
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-green-200">
-            <CardContent className="p-6">
-              <div className="mb-4 h-40 rounded-lg bg-green-200" />
-              <CardTitle className="mb-2 font-bold text-green-800">
-                Data Structures & Algorithms
-              </CardTitle>
-              <div className="space-y-1 text-sm text-green-600">
-                <p>
-                  <strong className="text-green-700">Topics:</strong> Prim's
-                  Algo, Kruskal's Algo
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {isLoading
+            ? Array(3)
+                .fill(0)
+                .map((_, index) => (
+                  <Skeleton
+                    key={index}
+                    className="h-[200px] w-full rounded-xl"
+                  />
+                ))
+            : subjects.map((subject: any, idx: number) => (
+                <CourseCard
+                  key={subject.slug}
+                  slug={subject.slug}
+                  title={subject.name}
+                  topics={subject.topics}
+                  email={email}
+                  image={getRandomBackground()}
+                />
+              ))}
         </div>
       </main>
 

@@ -1,7 +1,15 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
+import axios from "axios";
+import Link from "next/link";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { AddCourseModal } from "@/components/add-course";
 import {
   Home,
   Inbox,
@@ -10,10 +18,63 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
+  Bell,
 } from "lucide-react";
-import Link from "next/link";
+import CourseCard from "@/components/course-card";
 
 export default function Dashboard() {
+  const [subjects, setSubjects] = useState([]);
+  const [email, setEmail] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { user } = useUser();
+
+  const getRandomGradient = () => {
+    const gradients = [
+      "bg-gradient-to-r from-rose-100 to-teal-100",
+      "bg-gradient-to-r from-green-100 to-blue-100",
+      "bg-gradient-to-r from-yellow-100 to-pink-100",
+    ];
+    return gradients[Math.floor(Math.random() * gradients.length)];
+  };
+
+  const getRandomBackground = () => {
+    const backgrounds = ["bg-orange-200", "bg-green-200"];
+    return backgrounds[Math.floor(Math.random() * backgrounds.length)];
+  };
+
+  const getCourses = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/subjects/subjects`,
+        {
+          params: { email },
+        }
+      );
+
+      if (response.status === 200) {
+        setSubjects(response.data.subjects);
+      }
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (user?.emailAddresses[0].emailAddress) {
+      setEmail(user.emailAddresses[0].emailAddress);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (email) {
+      getCourses();
+    }
+  }, [email]);
+
   return (
     <div className="min-h-screen flex bg-white dark:bg-gray-950">
       {/* Sidebar with high contrast and larger text */}
@@ -70,14 +131,26 @@ export default function Dashboard() {
             <h2 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
               Dashboard
             </h2>
-            <div className="relative w-96">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
-              <Input
-                type="search"
-                placeholder="Search Here"
-                className="pl-10 text-lg h-12"
-                aria-label="Search"
-              />
+            <div className="flex items-center gap-4">
+              <div className="relative w-96">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
+                <Input
+                  type="search"
+                  placeholder="Search Here"
+                  className="pl-10 text-lg h-12"
+                  aria-label="Search"
+                  spellCheck="false"
+                  data-ms-editor="true"
+                />
+              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label="Notifications"
+                className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+              >
+                <Bell className="h-6 w-6" />
+              </Button>
             </div>
           </div>
 
@@ -105,41 +178,29 @@ export default function Dashboard() {
               <h3 className="text-3xl font-bold text-gray-900 dark:text-white">
                 My Courses
               </h3>
-              <Button variant="outline" size="lg" className="text-lg">
-                Add Courses
-              </Button>
+              <AddCourseModal email={email} />
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              <Card className="border-2">
-                <CardContent className="p-6 space-y-4">
-                  <div className="h-48 bg-gradient-to-r from-rose-100 to-teal-100 rounded-lg" />
-                  <div>
-                    <h4 className="text-2xl font-bold text-gray-900 dark:text-white">
-                      Operating Systems
-                    </h4>
-                    <ul className="mt-2 space-y-1 text-lg text-gray-700 dark:text-gray-300">
-                      <li>Mutex</li>
-                      <li>Semaphores</li>
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-2">
-                <CardContent className="p-6 space-y-4">
-                  <div className="h-48 bg-gradient-to-r from-green-100 to-blue-100 rounded-lg" />
-                  <div>
-                    <h4 className="text-2xl font-bold text-gray-900 dark:text-white">
-                      Data Structures & Algos
-                    </h4>
-                    <ul className="mt-2 space-y-1 text-lg text-gray-700 dark:text-gray-300">
-                      <li>Prim's Algo</li>
-                      <li>Kruskal's Algo</li>
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {isLoading
+                ? Array(3)
+                    .fill(0)
+                    .map((_, index) => (
+                      <Skeleton
+                        key={index}
+                        className="h-[250px] w-full rounded-xl"
+                      />
+                    ))
+                : subjects.map((subject: any, idx: number) => (
+                    <CourseCard
+                      key={subject.slug}
+                      slug={subject.slug}
+                      title={subject.name}
+                      topics={subject.topics}
+                      email={email}
+                      image={getRandomBackground()}
+                    />
+                  ))}
             </div>
           </div>
         </div>
