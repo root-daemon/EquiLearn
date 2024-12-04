@@ -89,7 +89,7 @@ export default function Dashboard() {
   return (
     <div className="dyslexic-friendly min-h-screen flex bg-white dark:bg-gray-900">
       {/* Sidebar */}
-      <aside className="w-72 bg-gray-100 dark:bg-gray-800 p-6 space-y-6">
+      <aside className="w-72 hidden sm:block bg-gray-100 dark:bg-gray-800 p-6 space-y-6">
         <h1 className="text-3xl font-bold tracking-wide text-gray-900 dark:text-white">
           UniVision
         </h1>
@@ -219,7 +219,7 @@ export default function Dashboard() {
       </main>
 
       {/* Right sidebar */}
-      <aside className="w-96 bg-gray-100 dark:bg-gray-800 p-6 space-y-8">
+      <aside className="w-96 hidden sm:block bg-gray-100 dark:bg-gray-800 p-6 space-y-8">
         <Card className="bg-white dark:bg-gray-700 border-none">
           <CardHeader>
             <CardTitle className="text-2xl text-center text-gray-900 dark:text-white">

@@ -90,9 +90,9 @@ export default function Dashboard() {
   }, [email]);
 
   return (
-    <div className="min-h-screen flex bg-white dark:bg-gray-950">
+    <div className="min-h-screen w-full flex bg-white dark:bg-gray-950">
       {/* Sidebar with high contrast and larger text */}
-      <aside className="w-72 bg-gray-900 text-white p-6 space-y-6">
+      <aside className="w-72 hidden sm:block bg-gray-900 text-white p-6 space-y-6">
         <h1 className="text-2xl font-bold tracking-tight">UniVision</h1>
 
         <nav className="space-y-2">
@@ -221,7 +221,7 @@ export default function Dashboard() {
       </main>
 
       {/* Right sidebar with improved contrast */}
-      <aside className="w-96 bg-gray-900 text-white p-6 space-y-8">
+      <aside className="w-96 hidden sm:block bg-gray-900 text-white p-6 space-y-8">
         <Card className="bg-gray-800 border-none">
           <CardHeader>
             <CardTitle className="text-2xl text-center text-white">

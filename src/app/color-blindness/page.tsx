@@ -72,7 +72,7 @@ export default function Dashboard() {
   return (
     <div className="flex min-h-screen w-full bg-green-50">
       {/* Left Sidebar */}
-      <aside className="w-64 border-r border-green-200 bg-green-100 p-4">
+      <aside className="hidden sm:block w-64 border-r border-green-200 bg-green-100 p-4">
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-green-800">UniVision</h1>
         </div>
@@ -116,7 +116,7 @@ export default function Dashboard() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-8">
+      <main className=" flex-1 p-8">
         <div className="mb-8 flex items-center justify-between">
           <h2 className="text-3xl font-bold text-green-800">Dashboard</h2>
           <div className="flex items-center gap-4">
@@ -186,7 +186,7 @@ export default function Dashboard() {
       </main>
 
       {/* Right Sidebar */}
-      <aside className="w-80 border-l border-green-200 bg-green-800 p-6 text-white">
+      <aside className="w-80 hidden sm:block border-l border-green-200 bg-green-800 p-6 text-white">
         <div className="mb-8">
           <h3 className="mb-6 text-2xl font-bold">Pomodoro Timer</h3>
           <div className="flex aspect-square items-center justify-center rounded-full border-4 border-green-600 bg-green-700">

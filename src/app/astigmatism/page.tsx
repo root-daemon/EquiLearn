@@ -74,7 +74,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen w-full bg-gray-50 font-['Verdana']">
       {/* Navigation Sidebar */}
-      <aside className="fixed left-0 top-0 h-full w-64 bg-white border-r border-gray-200 p-6 space-y-8">
+      <aside className="hidden sm:fixed left-0 top-0 h-full w-64 bg-white border-r border-gray-200 p-6 space-y-8">
         <div className="text-2xl font-semibold">UniVision</div>
 
         <nav className="space-y-4">
