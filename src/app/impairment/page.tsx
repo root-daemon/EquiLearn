@@ -11,7 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { checkUser } from "@/lib/checkUser";
 
 const impairments = [
   { id: "low-vision", label: "Low Vision" },
@@ -29,7 +28,6 @@ export default function VisionImpairmentSelector() {
   const [speechSynthesis, setSpeechSynthesis] =
     useState<SpeechSynthesis | null>(null);
 
-  checkUser();
   useEffect(() => {
     if (typeof window !== "undefined") {
       setSpeechSynthesis(window.speechSynthesis);
