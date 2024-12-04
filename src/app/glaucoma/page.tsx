@@ -1,25 +1,88 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Home, Book, Calendar, Clock } from "lucide-react";
+import { Home, Book, Calendar, Clock, Search } from "lucide-react";
+import { AddCourseModal } from "@/components/add-course";
+import CourseCard from "@/components/course-card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Dashboard() {
+  const [subjects, setSubjects] = useState([]);
+  const [email, setEmail] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const { user } = useUser();
+
+  const getRandomBackground = () => {
+    const backgrounds = ["/bg1.svg", "/bg2.svg", "/bg3.svg"];
+    return backgrounds[Math.floor(Math.random() * backgrounds.length)];
+  };
+
+  const getCourses = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/subjects/subjects`,
+        {
+          params: { email },
+        }
+      );
+
+      if (response.status === 200) {
+        setSubjects(response.data.subjects);
+      }
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (user?.emailAddresses[0].emailAddress) {
+      setEmail(user.emailAddresses[0].emailAddress);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (email) {
+      getCourses();
+    }
+  }, [email]);
+
+  const filteredSubjects = subjects.filter((subject) =>
+    subject.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
-    <div className="min-h-screen w-full bg-white dark:bg-gray-950 p-32">
-      <main className="mx-auto max-w-4xl">
+    <div className="min-h-screen w-full bg-white dark:bg-gray-950 p-8 md:p-16 lg:p-32">
+      <main className="mx-auto max-w-6xl">
         {/* Header */}
         <header className="mb-8 text-center">
           <h1 className="text-4xl font-bold mb-4">UniVision Dashboard</h1>
-          <Input
-            type="search"
-            placeholder="Search Here"
-            className="max-w-md mx-auto text-lg"
-          />
+          <div className="relative max-w-md mx-auto">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <Input
+              type="search"
+              placeholder="Search Here"
+              className="pl-10 text-lg py-6"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              spellCheck="false"
+              data-ms-editor="true"
+            />
+          </div>
         </header>
 
         {/* Main Navigation - Simplified and centered */}
         <nav className="mb-8">
-          <div className="flex justify-center space-x-4">
+          <div className="flex flex-wrap justify-center gap-4">
             {[
               { icon: Home, label: "Home" },
               { icon: Book, label: "Courses" },
@@ -51,40 +114,29 @@ export default function Dashboard() {
         <section className="mb-8">
           <div className="mb-6 flex items-center justify-between">
             <h2 className="text-3xl font-bold">My Courses</h2>
-            <Button variant="outline" size="lg" className="text-lg">
-              Add Course
-            </Button>
+            <AddCourseModal email={email} />
           </div>
 
-          <div className="space-y-6">
-            {[
-              {
-                title: "Operating Systems",
-                topics: ["Mutex", "Semaphores"],
-                gradient: "from-pink-500 to-orange-500",
-              },
-              {
-                title: "Data Structures & Algorithms",
-                topics: ["Prim's Algorithm", "Kruskal's Algorithm"],
-                gradient: "from-green-500 to-blue-500",
-              },
-            ].map((course) => (
-              <Card key={course.title} className="overflow-hidden">
-                <div className={`h-2 bg-gradient-to-r ${course.gradient}`} />
-                <CardHeader>
-                  <CardTitle className="text-2xl font-bold">
-                    {course.title}
-                  </CardTitle>
-                  <ul className="mt-2 space-y-1">
-                    {course.topics.map((topic) => (
-                      <li key={topic} className="text-lg text-muted-foreground">
-                        {topic}
-                      </li>
-                    ))}
-                  </ul>
-                </CardHeader>
-              </Card>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {isLoading
+              ? Array(3)
+                  .fill(0)
+                  .map((_, index) => (
+                    <Skeleton
+                      key={index}
+                      className="h-[200px] w-full rounded-xl"
+                    />
+                  ))
+              : filteredSubjects.map((subject) => (
+                  <CourseCard
+                    key={subject.slug}
+                    slug={subject.slug}
+                    title={subject.name}
+                    topics={subject.topics}
+                    email={email}
+                    image={getRandomBackground()}
+                  />
+                ))}
           </div>
         </section>
 

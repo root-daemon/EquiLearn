@@ -56,7 +56,7 @@ export default function CoursePage({
             answer: q.correct_answer.charCodeAt(0) - 65,
           })),
         })),
-        videoId: data.video_urls[0]?.split("?")[1],
+        videoId: data.video_urls[0]?.split("v=")[1] || "",
       }
     : null;
 
@@ -94,8 +94,8 @@ export default function CoursePage({
           </div>
 
           <div className="grid lg:grid-cols-[300px_1fr] gap-8">
-            <Card className="bg-white border border-[#9F85EE]/20 shadow-lg h-fit">
-              <CardHeader className="bg-[#9F85EE] text-white">
+            <Card className="bg-white border border-[#9F85EE]/20 shadow-lg rounded-xl h-fit">
+              <CardHeader className="bg-[#9F85EE] text-white rounded-t-xl">
                 <CardTitle>Lessons</CardTitle>
               </CardHeader>
               <CardContent className="p-4">
@@ -352,7 +352,7 @@ export default function CoursePage({
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
                           title={`Video for ${course.title}`}
-                          className="rounded-b-lg"
+                          className="rounded-lg"
                         />
                       ) : (
                         <div className="flex items-center justify-center h-full text-[#160B38]">

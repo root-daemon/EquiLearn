@@ -31,7 +31,7 @@ const CourseCard = ({
 
   return (
     <Link href={`/courses/${slug}`} className="block relative">
-      <div className="flex flex-col justify-start items-start h-[350px] w-[300px] p-5 gap-3 rounded-3xl border bg-white hover:shadow-lg transition-shadow">
+      <div className="flex flex-col relative justify-start items-start h-[350px] w-[300px] p-5 gap-3 rounded-3xl border bg-white hover:shadow-lg transition-shadow">
         {/* Trash Button */}
         <Trash
           className="absolute top-56 right-4 text-gray-600 hover:text-red-500 cursor-pointer z-10"

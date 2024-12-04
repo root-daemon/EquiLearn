@@ -78,7 +78,7 @@ export default function VisionImpairmentSelector() {
     };
 
     recognition.onerror = (event) => {
-      console.error("Speech recognition error", event.error);
+      console.log("Speech recognition error", event.error);
       setIsListening(false);
       handleVoiceSelection(); // Restart voice recognition
     };

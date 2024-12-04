@@ -1,11 +1,62 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useUser } from "@clerk/nextjs";
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
 import { Home, Inbox, CalendarIcon, Search, Settings } from "lucide-react";
 import Link from "next/link";
+import { AddCourseModal } from "@/components/add-course";
+import CourseCard from "@/components/course-card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Dashboard() {
+  const [subjects, setSubjects] = useState([]);
+  const [email, setEmail] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const { user } = useUser();
+
+  const getCourses = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/subjects/subjects`,
+        {
+          params: { email },
+        }
+      );
+
+      if (response.status === 200) {
+        setSubjects(response.data.subjects);
+      }
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (user?.emailAddresses[0].emailAddress) {
+      setEmail(user.emailAddresses[0].emailAddress);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (email) {
+      getCourses();
+    }
+  }, [email]);
+
+  const filteredSubjects = subjects.filter((subject) =>
+    subject.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="min-h-screen w-full bg-gray-50 font-['Verdana']">
       {/* Navigation Sidebar */}
@@ -45,6 +96,8 @@ export default function Dashboard() {
             type="search"
             placeholder="Search Here"
             className="w-80 bg-white"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
 
@@ -68,35 +121,28 @@ export default function Dashboard() {
         <div className="mb-8">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-3xl font-semibold text-gray-900">My Courses</h2>
-            <Button variant="outline" className="bg-white">
-              Add Courses
-            </Button>
+            <AddCourseModal email={email} />
           </div>
 
-          <div className="grid grid-cols-2 gap-12">
-            <Card className="bg-white">
-              <CardHeader>
-                <CardTitle className="">Operating Systems</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-6 text-gray-600">
-                  <li>Mutex</li>
-                  <li>Semaphores</li>
-                </ul>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-white">
-              <CardHeader>
-                <CardTitle>Data Structures & Algos</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 text-gray-600">
-                  <li>Prim's Algo</li>
-                  <li>Kruskal's Algo</li>
-                </ul>
-              </CardContent>
-            </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {isLoading
+              ? Array(2)
+                  .fill(0)
+                  .map((_, index) => (
+                    <Skeleton
+                      key={index}
+                      className="h-[200px] w-full rounded-xl"
+                    />
+                  ))
+              : filteredSubjects.map((subject) => (
+                  <CourseCard
+                    key={subject.slug}
+                    slug={subject.slug}
+                    title={subject.name}
+                    topics={subject.topics}
+                    email={email}
+                  />
+                ))}
           </div>
         </div>
       </main>

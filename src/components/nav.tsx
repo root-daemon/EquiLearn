@@ -17,7 +17,11 @@ export function Nav() {
         >
           Accessibility
         </Link>
-        <Button variant="outline">Sign up</Button>
+        <Button variant="outline">
+          <Link href="/sign-up" className="">
+            Sign Up
+          </Link>
+        </Button>
         <Button>
           {" "}
           <Link href="/dashboard" className="">
