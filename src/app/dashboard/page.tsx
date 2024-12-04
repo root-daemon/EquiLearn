@@ -1,14 +1,20 @@
+"use client";
 import CourseCard from "@/components/course-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import React from "react";
-import { auth } from "@clerk/nextjs/server";
-import { checkUser } from "@/lib/checkUser";
+import React, { useEffect, useState } from "react";
+import { AddCourseModal } from "@/components/add-course";
+import { useUser } from "@clerk/nextjs";
+import axios from "axios";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const Home = async () => {
-  const userId = auth();
-  const user = await checkUser();
+const Home = () => {
+  const [subjects, setSubjects] = useState([]);
+  const [email, setEmail] = useState<any>();
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { user } = useUser();
 
   const getRandomBackground = () => {
     const backgrounds = ["/bg1.svg", "/bg2.svg", "/bg3.svg"];
@@ -16,23 +22,40 @@ const Home = async () => {
     return backgrounds[randomIndex];
   };
 
-  const courses = [
-    {
-      id: "operating-systems",
-      title: "Operating Systems",
-      topics: ["Mutex", "Semaphores", "Deadlocks"],
-    },
-    {
-      id: "data-structures",
-      title: "Data Structures & Algos",
-      topics: ["Prim's Algo", "Kruskal's Algo", "Djikstra's Algo"],
-    },
-    {
-      id: "computer-organisation",
-      title: "Computer Organisation",
-      topics: ["ARM", "Bus Architecture", "Memory"],
-    },
-  ];
+  const getCourses = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/subjects/subjects`,
+        {
+          params: {
+            email: email,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        setSubjects(response.data.subjects);
+      }
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (user?.emailAddresses[0].emailAddress) {
+      const userEmail = user?.emailAddresses[0].emailAddress;
+      setEmail(userEmail);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (email) {
+      getCourses();
+    }
+  }, [email]);
 
   return (
     <div className="w-full h-full flex flex-col gap-8 justify-center items-center p-10">
@@ -66,21 +89,29 @@ const Home = async () => {
       {/* my courses */}
       <div className="flex justify-between items-center w-full ">
         <h1 className="text-2xl font-bold">My Courses</h1>
-        <Button className="w-fit bg-[#F2EFFD] text-[#9F85EE] rounded-full hover:bg-[#F2EFFD]">
-          Add Courses
-        </Button>
+        <AddCourseModal email={email} />
       </div>
 
       <div className="w-full h-full justify-start items-center flex flex-wrap gap-x-6 gap-y-8">
-        {courses.map((course, idx) => (
-          <CourseCard
-            key={idx}
-            id={course.id}
-            title={course.title}
-            topics={course.topics}
-            image={getRandomBackground()}
-          />
-        ))}
+        {isLoading
+          ? Array(1)
+              .fill(0)
+              .map((_, index) => (
+                <Skeleton
+                  key={index}
+                  className=" h-[350px] w-[300px] rounded-xl"
+                />
+              ))
+          : subjects.map((subject, idx) => (
+              <CourseCard
+                key={idx}
+                slug={subject.slug}
+                title={subject.name}
+                topics={subject.topics}
+                email={email}
+                image={getRandomBackground()}
+              />
+            ))}
       </div>
     </div>
   );
