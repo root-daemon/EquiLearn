@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -47,7 +47,7 @@ export default function CoursePage({
     ? {
         title: data.subject.name,
         description: data.subject.description,
-        lessons: data.subject.topics.map((topic: string, index: number) => ({
+        lessons: data.subject.topics.map((topic: string) => ({
           title: topic,
           flashcards: data.study_material.flashcards,
           notes: data.study_material.notes,
@@ -55,13 +55,14 @@ export default function CoursePage({
             ...q,
             answer: q.correct_answer.charCodeAt(0) - 65,
           })),
-          videoId: data.video_urls[index]?.split("v=")[1] || "",
         })),
+        videoId: data.video_urls[0]?.split("?")[1],
       }
     : null;
 
-  const currentLesson = course?.lessons[selectedLesson];
-
+  useEffect(() => {
+    console.log(course?.videoId);
+  }, [course]);
   return (
     <SWRConfig
       value={{
@@ -77,7 +78,7 @@ export default function CoursePage({
           <div className="flex justify-between items-center">
             <div>
               <Link
-                href="/dashboard"
+                href="/"
                 className="text-[#9F85EE] hover:underline mb-2 inline-block"
               >
                 &larr; Back to Dashboard
@@ -137,7 +138,7 @@ export default function CoursePage({
                     {isLoading ? (
                       <Skeleton className="h-6 w-48" />
                     ) : (
-                      currentLesson?.title || "Lesson Title"
+                      course?.lessons[selectedLesson]?.title || "Lesson Title"
                     )}
                   </CardTitle>
                 </CardHeader>
@@ -189,7 +190,8 @@ export default function CoursePage({
                               setCurrentCard((prev) =>
                                 prev > 0
                                   ? prev - 1
-                                  : currentLesson.flashcards.length - 1
+                                  : course?.lessons[selectedLesson].flashcards
+                                      .length - 1
                               );
                               setShowCardBack(false);
                             }}
@@ -210,7 +212,11 @@ export default function CoursePage({
                               }`}
                             >
                               <p className="text-2xl font-semibold text-[#160B38]">
-                                {currentLesson.flashcards[currentCard].question}
+                                {
+                                  course?.lessons[selectedLesson].flashcards[
+                                    currentCard
+                                  ].question
+                                }
                               </p>
                             </CardContent>
                             <CardContent
@@ -225,7 +231,11 @@ export default function CoursePage({
                               }}
                             >
                               <p className="text-2xl font-semibold text-[#160B38]">
-                                {currentLesson.flashcards[currentCard].answer}
+                                {
+                                  course?.lessons[selectedLesson].flashcards[
+                                    currentCard
+                                  ].answer
+                                }
                               </p>
                             </CardContent>
                           </Card>
@@ -234,7 +244,10 @@ export default function CoursePage({
                             size="icon"
                             onClick={() => {
                               setCurrentCard((prev) =>
-                                prev < currentLesson.flashcards.length - 1
+                                prev <
+                                course?.lessons[selectedLesson].flashcards
+                                  .length -
+                                  1
                                   ? prev + 1
                                   : 0
                               );
@@ -250,7 +263,7 @@ export default function CoursePage({
                       {!isLoading && (
                         <p className="text-center mt-4 text-sm text-[#160B38]/80">
                           Card {currentCard + 1} of{" "}
-                          {currentLesson.flashcards.length}
+                          {course?.lessons[selectedLesson].flashcards.length}
                         </p>
                       )}
                     </TabsContent>
@@ -264,7 +277,9 @@ export default function CoursePage({
                             <Skeleton className="h-4 w-2/3" />
                           </>
                         ) : (
-                          <ReactMarkdown>{currentLesson.notes}</ReactMarkdown>
+                          <ReactMarkdown>
+                            {course?.lessons[selectedLesson].notes}
+                          </ReactMarkdown>
                         )}
                       </div>
                     </TabsContent>
@@ -287,57 +302,61 @@ export default function CoursePage({
                                 </div>
                               </div>
                             ))
-                        : currentLesson.quiz.map((question, index) => (
-                            <div key={index} className="space-y-4 mb-8">
-                              <h3 className="font-medium text-lg text-[#160B38]">
-                                {question.question}
-                              </h3>
-                              <div className="space-y-2">
-                                {question.options.map((option, optionIndex) => (
-                                  <Button
-                                    key={optionIndex}
-                                    variant="outline"
-                                    className={`w-full justify-start transition-all duration-300 ease-in-out ${
-                                      quizAnswers[index] === optionIndex
-                                        ? optionIndex === question.answer
-                                          ? "bg-green-100 text-green-800 border-green-500"
-                                          : "bg-red-100 text-red-800 border-red-500"
-                                        : "hover:bg-[#9F85EE]/10 text-[#160B38] border-[#9F85EE]"
-                                    }`}
-                                    onClick={() =>
-                                      handleQuizAnswer(index, optionIndex)
-                                    }
-                                  >
-                                    {option}
-                                    {quizAnswers[index] === optionIndex && (
-                                      <span className="ml-2">
-                                        {optionIndex === question.answer
-                                          ? "✅"
-                                          : "❌"}
-                                      </span>
-                                    )}
-                                  </Button>
-                                ))}
+                        : course?.lessons[selectedLesson].quiz.map(
+                            (question, index) => (
+                              <div key={index} className="space-y-4 mb-8">
+                                <h3 className="font-medium text-lg text-[#160B38]">
+                                  {question.question}
+                                </h3>
+                                <div className="space-y-2">
+                                  {question.options.map(
+                                    (option, optionIndex) => (
+                                      <Button
+                                        key={optionIndex}
+                                        variant="outline"
+                                        className={`w-full justify-start transition-all duration-300 ease-in-out ${
+                                          quizAnswers[index] === optionIndex
+                                            ? optionIndex === question.answer
+                                              ? "bg-green-100 text-green-800 border-green-500"
+                                              : "bg-red-100 text-red-800 border-red-500"
+                                            : "hover:bg-[#9F85EE]/10 text-[#160B38] border-[#9F85EE]"
+                                        }`}
+                                        onClick={() =>
+                                          handleQuizAnswer(index, optionIndex)
+                                        }
+                                      >
+                                        {option}
+                                        {quizAnswers[index] === optionIndex && (
+                                          <span className="ml-2">
+                                            {optionIndex === question.answer
+                                              ? "✅"
+                                              : "❌"}
+                                          </span>
+                                        )}
+                                      </Button>
+                                    )
+                                  )}
+                                </div>
                               </div>
-                            </div>
-                          ))}
+                            )
+                          )}
                     </TabsContent>
                     <TabsContent value="video" className="aspect-video p-0">
                       {isLoading ? (
                         <div className="w-full h-full bg-gray-200 animate-pulse" />
-                      ) : currentLesson.videoId ? (
+                      ) : course?.videoId ? (
                         <iframe
                           width="100%"
                           height="100%"
-                          src={`https://www.youtube.com/embed/${currentLesson.videoId}`}
+                          src={`https://www.youtube.com/embed/${course.videoId}`}
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
-                          title={`Video for ${currentLesson.title}`}
+                          title={`Video for ${course.title}`}
                           className="rounded-b-lg"
                         />
                       ) : (
                         <div className="flex items-center justify-center h-full text-[#160B38]">
-                          No video available for this lesson.
+                          No video available for this course.
                         </div>
                       )}
                     </TabsContent>
