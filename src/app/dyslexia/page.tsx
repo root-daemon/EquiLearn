@@ -19,6 +19,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Bell,
+  Sidebar,
 } from "lucide-react";
 import "@/styles/dyslexic-friendly.css";
 import CourseCard from "@/components/course-card";
@@ -90,51 +91,7 @@ export default function Dashboard() {
     <div className="dyslexic-friendly min-h-screen flex bg-white dark:bg-gray-900">
       {/* Sidebar */}
       <aside className="w-72 hidden sm:block bg-gray-100 dark:bg-gray-800 p-6 space-y-6">
-        <h1 className="text-3xl font-bold tracking-wide text-gray-900 dark:text-white">
-          UniVision
-        </h1>
-
-        <nav className="space-y-2">
-          <Link
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 text-xl rounded-lg bg-blue-100 text-blue-800 hover:bg-blue-200"
-          >
-            <Home className="w-6 h-6" />
-            Home
-          </Link>
-
-          <Link
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 text-xl rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700"
-          >
-            <Inbox className="w-6 h-6" />
-            Inbox
-          </Link>
-
-          <Link
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 text-xl rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700"
-          >
-            <CalendarIcon className="w-6 h-6" />
-            Calendar
-          </Link>
-
-          <Link
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 text-xl rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700"
-          >
-            <Search className="w-6 h-6" />
-            Search
-          </Link>
-
-          <Link
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 text-xl rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700"
-          >
-            <Settings className="w-6 h-6" />
-            Settings
-          </Link>
-        </nav>
+        <Sidebar />
       </aside>
 
       {/* Main content */}

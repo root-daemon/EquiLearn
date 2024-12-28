@@ -8,7 +8,7 @@ import { AddCourseModal } from "@/components/add-course";
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
 import { Skeleton } from "@/components/ui/skeleton";
-import { checkUser } from "@/lib/checkUser";
+
 
 const Home = () => {
   const [subjects, setSubjects] = useState([]);

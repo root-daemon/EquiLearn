@@ -6,10 +6,11 @@ import axios from "axios";
 import { Bell, Calendar, Home, Inbox, Search, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AddCourseModal } from "@/components/add-course";
 import CourseCard from "@/components/course-card";
+import { Sidebar } from "@/components/ui/sidebar";
 
 export default function Dashboard() {
   const [subjects, setSubjects] = useState([]);
@@ -73,46 +74,7 @@ export default function Dashboard() {
     <div className="flex min-h-screen w-full bg-green-50">
       {/* Left Sidebar */}
       <aside className="hidden sm:block w-64 border-r border-green-200 bg-green-100 p-4">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-green-800">UniVision</h1>
-        </div>
-        <nav className="space-y-2">
-          <Button
-            variant="ghost"
-            className="w-full justify-start gap-2 bg-orange-100 font-bold text-orange-700 hover:bg-orange-200 hover:text-orange-800"
-          >
-            <Home className="h-5 w-5" />
-            <span>Home</span>
-          </Button>
-          <Button
-            variant="ghost"
-            className="w-full justify-start gap-2 text-green-700 hover:bg-green-200 hover:text-green-800"
-          >
-            <Inbox className="h-5 w-5" />
-            <span>Inbox</span>
-          </Button>
-          <Button
-            variant="ghost"
-            className="w-full justify-start gap-2 text-green-700 hover:bg-green-200 hover:text-green-800"
-          >
-            <Calendar className="h-5 w-5" />
-            <span>Calendar</span>
-          </Button>
-          <Button
-            variant="ghost"
-            className="w-full justify-start gap-2 text-green-700 hover:bg-green-200 hover:text-green-800"
-          >
-            <Search className="h-5 w-5" />
-            <span>Search</span>
-          </Button>
-          <Button
-            variant="ghost"
-            className="w-full justify-start gap-2 text-green-700 hover:bg-green-200 hover:text-green-800"
-          >
-            <Settings className="h-5 w-5" />
-            <span>Settings</span>
-          </Button>
-        </nav>
+      <Sidebar />
       </aside>
 
       {/* Main Content */}

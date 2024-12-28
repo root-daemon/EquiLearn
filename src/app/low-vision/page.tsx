@@ -19,6 +19,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Bell,
+  Sidebar,
 } from "lucide-react";
 import CourseCard from "@/components/course-card";
 
@@ -93,49 +94,7 @@ export default function Dashboard() {
     <div className="min-h-screen w-full flex bg-white dark:bg-gray-950">
       {/* Sidebar with high contrast and larger text */}
       <aside className="w-72 hidden sm:block bg-gray-900 text-white p-6 space-y-6">
-        <h1 className="text-2xl font-bold tracking-tight">UniVision</h1>
-
-        <nav className="space-y-2">
-          <Link
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 text-lg rounded-lg bg-primary text-primary-foreground hover:bg-primary/90"
-          >
-            <Home className="w-6 h-6" />
-            Home
-          </Link>
-
-          <Link
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 text-lg rounded-lg hover:bg-gray-800"
-          >
-            <Inbox className="w-6 h-6" />
-            Inbox
-          </Link>
-
-          <Link
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 text-lg rounded-lg hover:bg-gray-800"
-          >
-            <CalendarIcon className="w-6 h-6" />
-            Calendar
-          </Link>
-
-          <Link
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 text-lg rounded-lg hover:bg-gray-800"
-          >
-            <Search className="w-6 h-6" />
-            Search
-          </Link>
-
-          <Link
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 text-lg rounded-lg hover:bg-gray-800"
-          >
-            <Settings className="w-6 h-6" />
-            Settings
-          </Link>
-        </nav>
+        <Sidebar />
       </aside>
 
       {/* Main content with improved contrast and larger text */}
