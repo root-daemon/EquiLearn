@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import { AppCalendar } from "@/components/app-calendar";
 import { ClerkProvider } from "@clerk/nextjs";
 import { VisionImpairmentProvider } from "@/contexts/VisionImpairmentContext";
 

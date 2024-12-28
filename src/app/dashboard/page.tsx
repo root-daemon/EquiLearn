@@ -8,6 +8,7 @@ import { AddCourseModal } from "@/components/add-course";
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PomodoroTimer } from "@/components/pomodoro";
 
 
 const Home = () => {
@@ -86,6 +87,7 @@ const Home = () => {
             data-ms-editor="true"
           />
         </div>
+        <PomodoroTimer />
       </div>
       {/* splash */}
       <div className="bg-[#9F85EE] h-[35vh] p-10 w-full flex flex-col gap-4 justify-end rounded-2xl">
