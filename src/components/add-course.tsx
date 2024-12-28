@@ -65,7 +65,7 @@ export function AddCourseModal(email: any) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-fit bg-[#F2EFFD] text-[#9F85EE] rounded-full hover:bg-[#F2EFFD]">
+        <Button className="w-fit bg-clr/10 text-clr rounded-full hover:bg-clr/15">
           Add Courses
         </Button>
       </DialogTrigger>

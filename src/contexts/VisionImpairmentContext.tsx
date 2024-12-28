@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useState, useContext, ReactNode } from "react";
+import React, { createContext, useState, useContext, ReactNode, useEffect } from "react";
 
 type VisionImpairment =
   | "low-vision"
@@ -9,6 +9,7 @@ type VisionImpairment =
   | "glaucoma"
   | "astigmatism"
   | "none"
+  | string
   | null;
 
 interface VisionImpairmentContextType {
@@ -34,6 +35,13 @@ export const VisionImpairmentProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [impairment, setImpairment] = useState<VisionImpairment>(null);
+
+  useEffect(() => {
+    const storedImpairment = localStorage.getItem('impairment');
+    if (storedImpairment) {
+      setImpairment(storedImpairment as VisionImpairment);
+    }
+  }, []);
 
   return (
     <VisionImpairmentContext.Provider value={{ impairment, setImpairment }}>

@@ -87,23 +87,20 @@ export default function VisionImpairmentSelector() {
   };
 
   const handleSelection = (impairmentId: string) => {
-    setImpairment(impairmentId as any);
-    if (impairmentId === "none") {
-      speakText(
-        "You selected No Impairment. Navigating to the normal dashboard."
-      );
-      router.push("/dashboard");
-    } else {
+  
+    setImpairment(impairmentId);
+    localStorage.setItem('impairment', impairmentId);
+  
       speakText(
         `You selected ${impairmentId}. Navigating to the ${impairmentId} page.`
       );
-      router.push(`/${impairmentId}`);
-    }
+      router.push("/dashboard");
+    
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen w-full ">
-      <Card className="w-full max-w-4xl p-12">
+      <Card className="w-full max-w-4xl p-12 border-none bg-transparent">
         <CardHeader>
           <CardTitle className="text-4xl text-center mb-4">
             Select Your Vision Impairment
@@ -119,7 +116,7 @@ export default function VisionImpairmentSelector() {
               <Button
                 key={item.id}
                 onClick={() => handleSelection(item.id)}
-                className="text-2xl py-8 h-auto"
+                className="text-2xl py-8 h-auto rounded-2xl"
               >
                 {item.label}
               </Button>
@@ -138,7 +135,7 @@ export default function VisionImpairmentSelector() {
                   handleVoiceSelection
                 );
               }}
-              className="text-xl py-6 px-8 h-auto"
+              className="text-xl rounded-2xl py-6 px-8 h-auto"
             >
               Restart Voice Selection
             </Button>

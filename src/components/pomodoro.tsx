@@ -51,7 +51,7 @@ export function PomodoroTimer() {
   }
 
   return (
-    <div>
+    <div className='relative'>
       <Button 
         variant="outline" 
         size="icon"
@@ -61,7 +61,7 @@ export function PomodoroTimer() {
         <Timer className="h-4 w-4" />
       </Button>
       {isOpen && (
-        <Card className="absolute right-0 mt-2 w-64">
+        <Card className="absolute right-0 mt-2 w-64 bg-white/80 backdrop-blur-md">
           <CardHeader>
             <CardTitle>{isWork ? 'Work Time' : 'Break Time'}</CardTitle>
           </CardHeader>

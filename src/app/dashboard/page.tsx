@@ -9,10 +9,12 @@ import { useUser } from "@clerk/nextjs";
 import axios from "axios";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PomodoroTimer } from "@/components/pomodoro";
+import { useVisionImpairment } from '../../contexts/VisionImpairmentContext';
 
 
 const Home = () => {
   const [subjects, setSubjects] = useState([]);
+  const {impairment} = useVisionImpairment();
   const [email, setEmail] = useState<any>();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -73,10 +75,11 @@ const Home = () => {
   }, [email]);
 
   return (
-    <div className="w-full h-full flex flex-col gap-8 justify-center items-center p-10">
+    <div className="w-full h-full bg-white h-screen flex flex-col gap-8 justify-center items-center p-10">
       {/* heading */}
       <div className="flex justify-between items-center w-full ">
         <h1 className="text-4xl font-bold">Dashboard</h1>
+        <div className="flex gap-2 items-center">
         <div className="flex relative justify-start items-center">
           <Search className="absolute left-2 z-10 h-5" />
 
@@ -88,6 +91,7 @@ const Home = () => {
           />
         </div>
         <PomodoroTimer />
+        </div>
       </div>
       {/* splash */}
       <div className="bg-clr h-[35vh] p-10 w-full flex flex-col gap-4 justify-end rounded-2xl">
