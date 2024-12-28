@@ -109,7 +109,7 @@ export default function CoursePage({
             <div>
               <Link
                 href="/"
-                className="text-[#9F85EE] hover:underline mb-2 inline-block"
+                className="text-clr hover:underline mb-2 inline-block"
               >
                 &larr; Back to Dashboard
               </Link>
@@ -124,8 +124,8 @@ export default function CoursePage({
           </div>
 
           <div className="grid lg:grid-cols-[300px_1fr] gap-8">
-            <Card className="bg-white border border-[#9F85EE]/20 shadow-lg rounded-xl h-fit">
-              <CardHeader className="bg-[#9F85EE] text-white rounded-t-xl">
+            <Card className="bg-white border border-clr/20 shadow-lg rounded-xl h-fit">
+              <CardHeader className="bg-clr text-white rounded-t-xl">
                 <CardTitle>Lessons</CardTitle>
               </CardHeader>
               <CardContent className="p-4">
@@ -148,8 +148,8 @@ export default function CoursePage({
                             }
                             className={`w-full justify-start text-left transition-all duration-300 ${
                               selectedLesson === index
-                                ? "bg-[#9F85EE] text-white"
-                                : "hover:bg-[#9F85EE]/10 text-[#160B38]"
+                                ? "bg-clr text-white"
+                                : "hover:bg-clr/10 text-[#160B38]"
                             }`}
                             onClick={() => setSelectedLesson(index)}
                           >
@@ -162,8 +162,8 @@ export default function CoursePage({
             </Card>
 
             <div className="space-y-8">
-              <Card className="overflow-hidden bg-white border border-[#9F85EE]/20 shadow-lg">
-                <CardHeader className="bg-[#9F85EE] text-white">
+              <Card className="overflow-hidden bg-white border border-clr/20 shadow-lg">
+                <CardHeader className="bg-clr text-white">
                   <CardTitle>
                     {isLoading ? (
                       <Skeleton className="h-6 w-48" />
@@ -174,28 +174,28 @@ export default function CoursePage({
                 </CardHeader>
                 <CardContent className="p-0">
                   <Tabs defaultValue="flashcards" className="w-full">
-                    <TabsList className="w-full justify-start  border-b border-[#9F85EE]/20 bg-transparent px-4">
+                    <TabsList className="w-full justify-start  border-b border-clr/20 bg-transparent px-4">
                       <TabsTrigger
                         value="flashcards"
-                        className="data-[state=active]:bg-[#9F85EE] data-[state=active]:text-white  text-[#160B38]"
+                        className="data-[state=active]:bg-clr data-[state=active]:text-white  text-[#160B38]"
                       >
                         Flashcards
                       </TabsTrigger>
                       <TabsTrigger
                         value="notes"
-                        className="data-[state=active]:bg-[#9F85EE] data-[state=active]:text-white  text-[#160B38]"
+                        className="data-[state=active]:bg-clr data-[state=active]:text-white  text-[#160B38]"
                       >
                         Notes
                       </TabsTrigger>
                       <TabsTrigger
                         value="quiz"
-                        className="data-[state=active]:bg-[#9F85EE] data-[state=active]:text-white  text-[#160B38]"
+                        className="data-[state=active]:bg-clr data-[state=active]:text-white  text-[#160B38]"
                       >
                         Quiz
                       </TabsTrigger>
                       <TabsTrigger
                         value="video"
-                        className="data-[state=active]:bg-[#9F85EE] data-[state=active]:text-white  text-[#160B38]"
+                        className="data-[state=active]:bg-clr data-[state=active]:text-white  text-[#160B38]"
                       >
                         Video
                       </TabsTrigger>
@@ -226,12 +226,12 @@ export default function CoursePage({
                               setShowCardBack(false);
                             }}
                             aria-label="Previous flashcard"
-                            className="bg-white text-[#160B38] border-[#9F85EE] hover:bg-[#9F85EE] hover:text-white"
+                            className="bg-white text-[#160B38] border-clr hover:bg-clr hover:text-white"
                           >
                             <ChevronLeft className="h-4 w-4" />
                           </Button>
                           <Card
-                            className="flex-1 cursor-pointer min-h-[300px] transition-all duration-500 ease-in-out transform perspective-1000 relative bg-white border border-[#9F85EE]/20"
+                            className="flex-1 cursor-pointer min-h-[300px] transition-all duration-500 ease-in-out transform perspective-1000 relative bg-white border border-clr/20"
                             onClick={() => setShowCardBack(!showCardBack)}
                           >
                             <CardContent
@@ -284,7 +284,7 @@ export default function CoursePage({
                               setShowCardBack(false);
                             }}
                             aria-label="Next flashcard"
-                            className="bg-white text-[#160B38] border-[#9F85EE] hover:bg-[#9F85EE] hover:text-white"
+                            className="bg-white text-[#160B38] border-clr hover:bg-clr hover:text-white"
                           >
                             <ChevronRight className="h-4 w-4" />
                           </Button>
@@ -349,7 +349,7 @@ export default function CoursePage({
                                             ? optionIndex === question.answer
                                               ? "bg-green-100 text-green-800 border-green-500"
                                               : "bg-red-100 text-red-800 border-red-500"
-                                            : "hover:bg-[#9F85EE]/10 text-[#160B38] border-[#9F85EE]"
+                                            : "hover:bg-clr/10 text-[#160B38] border-clr"
                                         }`}
                                         onClick={() =>
                                           handleQuizAnswer(index, optionIndex)
