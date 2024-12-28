@@ -11,21 +11,10 @@ export function Nav() {
         <Link href="#features" className="text-sm font-medium hover:underline">
           Features
         </Link>
-        <Link
-          href="#accessibility"
-          className="text-sm font-medium hover:underline"
-        >
-          Accessibility
-        </Link>
-        <Button variant="outline">
-          <Link href="/sign-up" className="">
+
+        <Button variant="outline" className="bg-clr text-white font-semibold rounded-xl border-none">
+          <Link href="/sign-up" className="font-bold">
             Sign Up
-          </Link>
-        </Button>
-        <Button>
-          {" "}
-          <Link href="/dashboard" className="">
-            Dashboard
           </Link>
         </Button>
       </div>

@@ -55,7 +55,7 @@ export function Features() {
   ];
 
   return (
-    <section id="features" className="py-24 bg-slate-50">
+    <section id="features" className="py-24">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
@@ -69,7 +69,7 @@ export function Features() {
           {features.map((feature) => (
             <Card key={feature.title}>
               <CardHeader>
-                <feature.icon className="h-8 w-8 text-purple-600 mb-4" />
+                <feature.icon className="h-8 w-8 text-clr mb-4" />
                 <CardTitle>{feature.title}</CardTitle>
                 <CardDescription>{feature.description}</CardDescription>
               </CardHeader>
