@@ -58,11 +58,11 @@ export function Features() {
     <section id="features" className="py-24">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
-            Transform Your Study Experience
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-1">
+          Tools That Adapt to You
           </h2>
           <p className="text-lg text-muted-foreground">
-            Powerful tools that adapt to your learning style and visual needs
+          Transform How You Learn with Customizable Tools for Every Need
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

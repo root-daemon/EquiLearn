@@ -52,7 +52,7 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="text-3xl text-black font-bold my-4 ml-4">
-            UniVision
+            Equilearn
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="p-3 gap-3">

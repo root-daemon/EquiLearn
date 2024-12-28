@@ -92,7 +92,7 @@ const Home = () => {
       {/* splash */}
       <div className="bg-clr h-[35vh] p-10 w-full flex flex-col gap-4 justify-end rounded-2xl">
         <h1 className="text-2xl text-white font-bold w-1/2">
-          Welcome to UniVision
+          Welcome to Equilearn
         </h1>
         <h1 className="text-lg leading-none text-white font-medium w-1/2">
           Need help on using the app? Take a look at this tutorial to get

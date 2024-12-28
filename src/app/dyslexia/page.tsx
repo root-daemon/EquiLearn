@@ -122,7 +122,7 @@ export default function Dashboard() {
           <Card className="bg-blue-100 border-none">
             <CardContent className="p-8 space-y-4">
               <h3 className="text-3xl font-bold text-blue-800">
-                Welcome to UniVision
+                Welcome to Equilearn
               </h3>
               <p className="text-xl text-blue-700">
                 Need help on using the app? Take a look at this tutorial to get

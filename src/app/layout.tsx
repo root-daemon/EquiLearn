@@ -18,7 +18,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "uniVision",
+  title: "Equilearn",
   description: "Studying Dashboard",
 };
 

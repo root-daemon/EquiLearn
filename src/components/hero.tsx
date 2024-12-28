@@ -20,7 +20,7 @@ export function Hero() {
           </div>
           
           <p className="text-base  max-w-screen-sm text-muted-foreground mb-8">
-            UniVision adapts to your needs with AI-powered study materials and
+            Equilearn adapts to your needs with AI-powered study materials and
             five specialized visual modes. Generate custom content, from video
             summaries to flashcards, tailored to your learning style.
           </p>

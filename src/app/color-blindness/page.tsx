@@ -104,7 +104,7 @@ export default function Dashboard() {
         {/* Welcome Banner */}
         <Card className="mb-8 bg-orange-500 text-white">
           <CardContent className="p-6">
-            <h3 className="mb-2 text-2xl font-bold">Welcome to UniVision</h3>
+            <h3 className="mb-2 text-2xl font-bold">Welcome to Equilearn</h3>
             <p className="mb-4 text-orange-100">
               <strong>Need help on using the app?</strong> Take a look at this
               tutorial to get started

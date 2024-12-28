@@ -80,7 +80,7 @@ export default function Dashboard() {
 
   const Sidebar = ({ className = "" }) => (
     <div className={`bg-white p-6 space-y-8 ${className}`}>
-      <div className="text-2xl font-semibold">UniVision</div>
+      <div className="text-2xl font-semibold">Equilearn</div>
 
       <nav className="space-y-4">
         <Link
@@ -147,7 +147,7 @@ export default function Dashboard() {
         <Card className="mb-8 sm:mb-12 bg-gray-100 border-none">
           <CardContent className="p-6 sm:p-8">
             <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 mb-4">
-              Welcome to UniVision
+              Welcome to Equilearn
             </h2>
             <p className="text-gray-600 mb-6 leading-relaxed">
               Need help on using the app? Take a look at this tutorial to get

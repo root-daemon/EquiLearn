@@ -79,7 +79,7 @@ export default function Dashboard() {
       <main className="mx-auto max-w-6xl">
         {/* Header */}
         <header className="mb-8 text-center">
-          <h1 className="text-4xl font-bold mb-4">UniVision Dashboard</h1>
+          <h1 className="text-4xl font-bold mb-4">Equilearn Dashboard</h1>
           <div className="relative max-w-md mx-auto">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <Input
@@ -114,7 +114,7 @@ export default function Dashboard() {
         {/* Welcome Banner - High contrast */}
         <Card className="mb-8 bg-primary text-primary-foreground">
           <CardContent className="p-8">
-            <h2 className="mb-4 text-3xl font-bold">Welcome to UniVision</h2>
+            <h2 className="mb-4 text-3xl font-bold">Welcome to Equilearn</h2>
             <p className="mb-6 text-xl">
               Need help using the app? Check out our tutorial to get started.
             </p>
