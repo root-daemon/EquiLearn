@@ -298,7 +298,7 @@ export default function CoursePage({
                       )}
                     </TabsContent>
                     <TabsContent value="notes">
-                      <div className="prose max-w-none p-6 text-[#160B38]">
+                      <div className="prose p-6 px-32 text-[#160B38]">
                         {isLoading ? (
                           <>
                             <Skeleton className="h-6 w-3/4 mb-4" />
