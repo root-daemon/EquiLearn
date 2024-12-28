@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
-import { Bell, Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { Bell} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";

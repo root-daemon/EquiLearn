@@ -21,7 +21,7 @@ export default function CoursePage({
   const [showCardBack, setShowCardBack] = useState(false);
   const [currentCard, setCurrentCard] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState<number[]>([]);
-  const [email, setEmail] = useState<any>();
+  const [email, setEmail] = useState<string>();
 
   const courseId = React.use(params).courseId;
 
