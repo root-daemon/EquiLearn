@@ -62,33 +62,55 @@ const impairments = [
 export function VisionModes() {
   return (
     <section id="accessibility" className="py-12">
-      <div className="container mx-auto px-4 max-w-6xl">
+      <div className="container mx-auto max-w-6xl px-4">
+        <div className="mb-12 flex flex-col items-center justify-center text-center">
+          <h2 className="mb-4 text-4xl font-bold">Accessible for Everyone</h2>
+          <p className="text-md max-w-screen-sm opacity-60">
+            Tailored solutions for five different types of visual impairments,
+            ensuring an inclusive learning experience for all students.
+          </p>
+        </div>
+
         <div className="grid grid-cols-1 gap-12">
           {impairments.map((impairment) => (
-            <div 
-              key={impairment.name} 
-              className="flex gap-12 items-start justify-center max-w-5xl mx-auto"
+            <div
+              key={impairment.name}
+              className="mx-auto flex max-w-5xl items-start justify-center gap-12"
             >
               {/* Image Card */}
-              <div className="bg-transparent rounded-2xl shadow-lg hover:shadow-xl transition-shadow w-[280px] flex-shrink-0">
+              <div className="w-[480px] flex-shrink-0 rounded-2xl bg-transparent shadow-lg transition-shadow hover:shadow-xl">
                 <Image
                   src={`/${impairment.image}.jpeg`}
                   alt={`Visual representation for ${impairment.name}`}
-                  width={400}
-                  height={200}
-                  className="w-full h-auto object-cover rounded-2xl"
+                  width={1200}
+                  height={600}
+                  className="h-auto w-full rounded-2xl object-cover"
                 />
               </div>
 
               {/* Content */}
-              <div className="flex-grow max-w-xl space-y-4 text-black pt-2">
-                <h3 className="text-2xl font-semibold text-left">{impairment.name}</h3>
-                <p className="!text-black text-left">{impairment.description}</p>
+              <div className="max-w-xl flex-grow space-y-4 pt-2 text-black">
+                <h3 className="text-left text-2xl font-semibold">
+                  {impairment.name}
+                </h3>
+                <p className="text-left !text-black">
+                  {impairment.description}
+                </p>
                 <ul className="space-y-2">
                   {impairment.features.map((feature, index) => (
                     <li key={index} className="flex items-center space-x-2">
-                      <svg className="h-5 w-5 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      <svg
+                        className="h-5 w-5 text-black"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
                       </svg>
                       <span>{feature}</span>
                     </li>
