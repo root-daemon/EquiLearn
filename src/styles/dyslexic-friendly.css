@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap");
+
+.dyslexic-friendly {
+  font-family: "Lexend", sans-serif;
+  line-height: 1.6;
+  letter-spacing: 0.05em;
+  word-spacing: 0.1em;
+}
+
+.dyslexic-friendly h1,
+.dyslexic-friendly h2,
+.dyslexic-friendly h3,
+.dyslexic-friendly h4,
+.dyslexic-friendly h5,
+.dyslexic-friendly h6 {
+  margin-bottom: 0.5em;
+  line-height: 1.2;
+}
+
+.dyslexic-friendly p {
+  margin-bottom: 1em;
+}
+
+.dyslexic-friendly .card-content {
+  background-color: #f0f0f0;
+  border-left: 6px solid #007bff;
+}
+
+.dyslexic-friendly .highlight {
+  background-color: #ffffd1;
+}
