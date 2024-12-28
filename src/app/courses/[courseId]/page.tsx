@@ -46,6 +46,7 @@ export default function CoursePage({
 
   if (error) return <div>Failed to load</div>;
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const course = data
     ? {
         title: data.subject.name,
@@ -63,12 +64,15 @@ export default function CoursePage({
       }
     : null;
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     console.log(course?.videoId);
   }, [course]);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { user } = useUser();
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     const checkUserAndSetEmail = async () => {
       if (user?.emailAddresses[0].emailAddress) {
@@ -170,28 +174,28 @@ export default function CoursePage({
                 </CardHeader>
                 <CardContent className="p-0">
                   <Tabs defaultValue="flashcards" className="w-full">
-                    <TabsList className="w-full justify-start rounded-none border-b border-[#9F85EE]/20 bg-transparent p-0">
+                    <TabsList className="w-full justify-start  border-b border-[#9F85EE]/20 bg-transparent px-4">
                       <TabsTrigger
                         value="flashcards"
-                        className="data-[state=active]:bg-[#9F85EE] data-[state=active]:text-white rounded-none text-[#160B38]"
+                        className="data-[state=active]:bg-[#9F85EE] data-[state=active]:text-white  text-[#160B38]"
                       >
                         Flashcards
                       </TabsTrigger>
                       <TabsTrigger
                         value="notes"
-                        className="data-[state=active]:bg-[#9F85EE] data-[state=active]:text-white rounded-none text-[#160B38]"
+                        className="data-[state=active]:bg-[#9F85EE] data-[state=active]:text-white  text-[#160B38]"
                       >
                         Notes
                       </TabsTrigger>
                       <TabsTrigger
                         value="quiz"
-                        className="data-[state=active]:bg-[#9F85EE] data-[state=active]:text-white rounded-none text-[#160B38]"
+                        className="data-[state=active]:bg-[#9F85EE] data-[state=active]:text-white  text-[#160B38]"
                       >
                         Quiz
                       </TabsTrigger>
                       <TabsTrigger
                         value="video"
-                        className="data-[state=active]:bg-[#9F85EE] data-[state=active]:text-white rounded-none text-[#160B38]"
+                        className="data-[state=active]:bg-[#9F85EE] data-[state=active]:text-white  text-[#160B38]"
                       >
                         Video
                       </TabsTrigger>
