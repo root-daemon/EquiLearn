@@ -3,19 +3,15 @@
 import React, { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
-import Link from "next/link";
-import { Calendar } from "@/components/ui/calendar";
+
+
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AddCourseModal } from "@/components/add-course";
 import {
-  Home,
-  Inbox,
-  CalendarIcon,
   Search,
-  Settings,
   ChevronLeft,
   ChevronRight,
   Bell,
