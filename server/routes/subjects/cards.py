@@ -196,21 +196,3 @@ async def upload_file(file: UploadFile = File(...)):
 
     result = generator.process_large_text(text)
     return JSONResponse(content=result)
-
-
-@cards_router.post("/text/")
-async def upload(query: str):
-    api_key = env.GEMINI_API_KEY
-    if not api_key:
-        raise HTTPException(status_code=400, detail="Gemini API key is required")
-
-    generator = StudyMaterialGenerator(api_key=api_key)
-    print(f"StudyMaterialGenerator initialized with API key: {api_key}")
-
-    if query:
-        text = query
-    else:
-        raise HTTPException(status_code=400, detail="Context must be provided")
-
-    result = generator.process_large_text(text)
-    return JSONResponse(content=result)

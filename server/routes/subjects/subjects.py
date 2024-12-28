@@ -1,12 +1,12 @@
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse
+from routes.subjects.cards import StudyMaterialGenerator
 from utilities.database import Database
 from schemas.schema import UserSubjects
 from slugify import slugify
 from utilities.slugify import generate_unique_slug, subject_exists
-from routes.subjects.card import StudyMaterialGenerator
-from googleapiclient.discovery import build
 from utilities.env import Env
+from googleapiclient.discovery import build
 
 db = Database()
 subjects_router = APIRouter()

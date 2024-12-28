@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from routes.youtube.youtube import yt_router
 from routes.subjects.subjects import subjects_router
-from routes.subjects.card import cards_router
+from routes.subjects.cards import cards_router
 
 app = FastAPI()
 
