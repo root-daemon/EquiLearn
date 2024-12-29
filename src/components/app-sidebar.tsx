@@ -29,13 +29,8 @@ const items = [
     icon: Inbox,
   },
   {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
     title: "Account",
-    url: "#",
+    url: "/impairment",
     icon: Settings,
   },
 ];

@@ -131,7 +131,7 @@ export default function CoursePage({
           <div className="m-12 flex items-center justify-between">
             <div>
               <Link
-                href="/"
+                href="/dashboard"
                 className="mb-2 inline-block text-clr hover:underline"
               >
                 &larr; Back to Dashboard
@@ -219,8 +219,9 @@ export default function CoursePage({
                         <div className="flex items-center justify-between space-x-4">
                           <Skeleton className="h-10 w-10 rounded-full" />
                           <Card className="min-h-[300px] flex-1">
-                            <CardContent className="flex h-full items-center justify-center">
-                              <Skeleton className="h-24 w-3/4" />
+                            <CardContent className="flex h-[300px] flex-col gap-4 items-center justify-center">
+                              <Skeleton className="h-6 w-3/4" />
+                              <Skeleton className="h-6 w-1/4" />
                             </CardContent>
                           </Card>
                           <Skeleton className="h-10 w-10 rounded-full" />
@@ -321,7 +322,7 @@ export default function CoursePage({
                               ),
                               h2: ({ node, ...props }) => (
                                 <h2
-                                  className="mb-1 text-3xl font-bold"
+                                  className="mb-3 text-3xl font-bold"
                                   {...props}
                                 />
                               ),

@@ -20,6 +20,10 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Equilearn",
   description: "Studying Dashboard",
+  icons: {
+    icon: "/favicon.png",
+  },
+  themeColor: "#160B38",
 };
 
 export default function RootLayout({

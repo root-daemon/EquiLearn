@@ -37,11 +37,12 @@ html, body {
 }
 
 .color-blindness {
-  filter: contrast(175%) saturate(150%);
+  filter: contrast(175%) saturate(0%);
   border: 4px solid #0066ff;
   padding: 15px;
   background-color: #ffffff;
   color: #000000;
+  
   background-image: repeating-linear-gradient(45deg, #fff, #fff 15px, #e6e6e6 15px, #e6e6e6 30px);
   outline: 3px solid #ff6600;
   outline-offset: 2px;
