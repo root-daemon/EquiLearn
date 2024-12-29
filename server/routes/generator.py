@@ -91,9 +91,24 @@ class StudyMaterialGenerator:
 
     def create_flashcards_task(self):
         return Task(
-            description=f"""Create 5 flashcards for {self.lesson_name} ...""",
+            description=(
+                f"Create 5 flashcards for {self.lesson_name} as a JSON array of objects. "
+                "Each object should have the following two fields: 'question' and 'answer'.\n\n"
+                "Example of the *entire output* you should provide (no extra keys or text):\n"
+                "[\n"
+                "  {\n"
+                "    \"question\": \"What is an Operating System?\",\n"
+                "    \"answer\": \"A software that manages computer hardware and software resources...\"\n"
+                "  },\n"
+                "  {\n"
+                "    \"question\": \"Second question?\",\n"
+                "    \"answer\": \"Second answer\"\n"
+                "  }\n"
+                "]\n\n"
+                "Return only valid JSON in this array format. also dont use formatting and make this as a json format, Do not add the json thing, no new lines just a raw json as ill send it directly to the api. do not send me a markdown and should be an array of the objects strictly! FOLLOW THE JSON FORMAT STRICTLY!"
+            ),
             agent=self.create_flashcard_agent(),
-            expected_output="JSON array of flashcard objects"
+            expected_output="JSON array of flashcard objects with 'question' and 'answer' keys"
         )
 
     def create_quiz_task(self):
