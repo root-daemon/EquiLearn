@@ -98,6 +98,52 @@ export default function VisionImpairmentSelector() {
     
   };
 
+  const voiceNavigate = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    
+    // Add numeric labels to interactive elements
+    const elements = document.querySelectorAll('button, a, [role="button"]');
+    elements.forEach((el, index) => {
+      const label = document.createElement('span');
+      label.textContent = `${index + 1}`;
+      label.className = 'absolute -top-4 -left-2 bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm';
+      if (el instanceof HTMLElement) {
+        el.style.position = 'relative';
+        el.appendChild(label);
+      }
+    });
+  
+    recognition.onresult = (event) => {
+      const text = event.results[event.results.length - 1][0].transcript.toLowerCase();
+      
+      // Handle numeric selection
+      const number = parseInt(text);
+      if (!isNaN(number) && number > 0 && number <= elements.length) {
+        const element = elements[number - 1] as HTMLElement;
+        element.click();
+        return;
+      }
+  
+      // Handle navigation commands
+      if (text.includes('back')) {
+        window.history.back();
+      } else if (text.includes('forward')) {
+        window.history.forward();
+      }
+    };
+  
+    recognition.onend = () => {
+      recognition.start(); // Restart recognition
+    };
+  
+    recognition.start();
+  };
+
+  useEffect(() => {
+    voiceNavigate();
+  }, []);
+
   return (
     <div className="flex items-center justify-center min-h-screen w-full ">
       <Card className="w-full max-w-4xl p-12 border-none bg-transparent">
