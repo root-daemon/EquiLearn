@@ -23,7 +23,7 @@ if not GROQ_API_KEY:
 groq_llm = LLM(
     model="groq/llama3-70b-8192",
     temperature=0.7,
-    max_tokens=500
+    max_tokens=1500
 )
 
 
