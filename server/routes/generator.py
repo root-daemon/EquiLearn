@@ -113,10 +113,31 @@ class StudyMaterialGenerator:
 
     def create_quiz_task(self):
         return Task(
-            description=f"""Create a multiple choice quiz for {self.lesson_name} ...""",
+            description=(
+                f"Create a multiple choice quiz for {self.lesson_name} as a JSON array of objects.\n\n"
+                "Each quiz question should have:\n"
+                "  1. \"question\": A string containing the question.\n"
+                "  2. \"options\": An array of exactly 4 strings labeled A), B), C), D).\n"
+                "  3. \"correct_answer\": A single letter (A, B, C, or D) that indicates the correct option.\n\n"
+                "Return only valid JSON, in this array format.\n\n"
+                "Example (replace with your own questions):\n"
+                "[\n"
+                "  {\n"
+                "    \"question\": \"What is an operating system?\",\n"
+                "    \"options\": [\n"
+                "      \"A) A program that manages computer hardware and software resources\",\n"
+                "      \"B) A collection of application software\",\n"
+                "      \"C) A type of programming language\",\n"
+                "      \"D) A network of computers\"\n"
+                "    ],\n"
+                "    \"correct_answer\": \"A\"\n"
+                "  }\n"
+                "]"
+            ),
             agent=self.create_quiz_agent(),
-            expected_output="JSON formatted quiz with questions, options, and answers"
+            expected_output="Return only valid JSON in this array format. also dont use formatting and make this as a json format, Do not add the json thing, no new lines just a raw json as ill send it directly to the api. do not send me a markdown and should be an array of the objects strictly! FOLLOW THE JSON FORMAT STRICTLY!"
         )
+
 
     async def execute_task(self, task_type: str) -> Dict:
         try:
