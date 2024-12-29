@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { generateTask } from './course';
-import { Course } from '@/types/Course';
+import { Course, Flashcard, QuizQuestion } from '@/types/Course';
 
 export function useCourseState(courseData: Course) {
-  const [notes, setNotes] = useState<string | null>(null);
-  const [flashcards, setFlashcards] = useState<any[] | null>(null);
-  const [quiz, setQuiz] = useState<any[] | null>(null);
+  const [notes, setNotes] = useState<string>('');
+  const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
+  const [quiz, setQuiz] = useState<QuizQuestion[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -35,9 +35,16 @@ export function useCourseState(courseData: Course) {
         ]);
 
         if (mounted) {
-          setNotes(notesData.content);
-          setFlashcards(flashcardsData.content);
-          setQuiz(quizData.content);
+          // Parse notes (markdown content)
+          setNotes(notesData.result.content.raw);
+
+          // Parse flashcards
+          const flashcardsContent = JSON.parse(flashcardsData.result.flashcards.raw);
+          setFlashcards(flashcardsContent);
+
+          // Parse quiz
+          const quizContent = JSON.parse(quizData.result.quiz.raw);
+          setQuiz(quizContent);
         }
       } catch (error) {
         console.error('Error fetching course content:', error);
@@ -55,11 +62,11 @@ export function useCourseState(courseData: Course) {
     };
   }, [courseData]);
 
-  return { 
-    notes: notes ?? '',
-    flashcards: flashcards ?? [],
-    quiz: quiz ?? [],
-    isLoading 
+  return {
+    notes,
+    flashcards,
+    quiz,
+    isLoading
   };
 }
 
