@@ -11,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import ReactMarkdown from "react-markdown";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
+import remarkGfm from 'remark-gfm'
 
 export default function CoursePage({
   params,
@@ -160,19 +161,10 @@ export default function CoursePage({
             </div>
 
             <div className="space-y-8">
-              <Card className="overflow-hidden bg-white border border-clr/20 shadow-lg">
-                <CardHeader className="bg-clr text-white">
-                  <CardTitle>
-                    {isLoading ? (
-                      <Skeleton className="h-6 w-48" />
-                    ) : (
-                      course?.lessons[selectedLesson]?.title || "Lesson Title"
-                    )}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-0">
+              <div className="overflow-hidden bg-white border-0 border-clr/20">
+                <CardContent className="p-0 rounded-none">
                   <Tabs defaultValue="flashcards" className="w-full">
-                    <TabsList className="w-full justify-start  border-b border-clr/20 bg-transparent px-4">
+                    <TabsList className="w-full justify-start  border-b rounded-none border-clr/20 bg-transparent px-4">
                       <TabsTrigger
                         value="flashcards"
                         className="data-[state=active]:bg-clr data-[state=active]:text-white  text-[#160B38]"
@@ -296,7 +288,7 @@ export default function CoursePage({
                       )}
                     </TabsContent>
                     <TabsContent value="notes">
-                      <div className="prose p-6 px-32 text-[#160B38]">
+                      <div className="prose p-6 px-32 w-full text-[#160B38]">
                         {isLoading ? (
                           <>
                             <Skeleton className="h-6 w-3/4 mb-4" />
@@ -305,9 +297,37 @@ export default function CoursePage({
                             <Skeleton className="h-4 w-2/3" />
                           </>
                         ) : (
-                          <ReactMarkdown>
+                            <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            components={{
+                              h1: ({ node, ...props }) => (
+                              <h1 className="text-5xl font-extrabold mb-2 border-b border-gray-500" {...props} />
+                              ),
+                              h2: ({ node, ...props }) => (
+                              <h2 className="text-3xl font-bold mb-1" {...props} />
+                              ),
+                              h3: ({ node, ...props }) => (
+                              <h3 className="text-2xl font-bold" {...props} />
+                              ),
+                              p: ({ node, ...props }) => (
+                              <p className="mb-4 ml-1" {...props} />
+                              ),
+                              ul: ({ node, ...props }) => (
+                              <ul className="list-disc list-inside ml-2 pl-2" {...props} />
+                              ),
+                              ol: ({ node, ...props }) => (
+                              <ol className="list-decimal list-inside ml-2 pl-2" {...props} />
+                              ),
+                              blockquote: ({ node, ...props }) => (
+                              <blockquote className="border-l-4 border-gray-300 pl-4 italic" {...props} />
+                              ),
+                              code: ({ node, ...props }) => (
+                              <code className="bg-gray-100 p-1 rounded" {...props} />
+                              ),
+                            }}
+                            >
                             {course?.lessons[selectedLesson].notes}
-                          </ReactMarkdown>
+                            </ReactMarkdown>
                         )}
                       </div>
                     </TabsContent>
@@ -333,7 +353,7 @@ export default function CoursePage({
                         : course?.lessons[selectedLesson].quiz.map(
                             (question, index) => (
                               <div key={index} className="space-y-4 mb-8">
-                                <h3 className="font-medium text-lg text-[#160B38]">
+                                <h3 className="font-medium text-lg font-semibold text-[#160B38]">
                                   {question.question}
                                 </h3>
                                 <div className="space-y-2">
@@ -342,12 +362,12 @@ export default function CoursePage({
                                       <Button
                                         key={optionIndex}
                                         variant="outline"
-                                        className={`w-full justify-start transition-all duration-300 ease-in-out ${
+                                        className={`w-full justify-start items-center transition-all duration-300 ease-in-out ${
                                           quizAnswers[index] === optionIndex
                                             ? optionIndex === question.answer
                                               ? "bg-green-100 text-green-800 border-green-500"
                                               : "bg-red-100 text-red-800 border-red-500"
-                                            : "hover:bg-clr/10 text-[#160B38] border-clr"
+                                            : "hover:bg-clr/10 text-[#160B38] border-clr/20"
                                         }`}
                                         onClick={() =>
                                           handleQuizAnswer(index, optionIndex)
@@ -390,7 +410,7 @@ export default function CoursePage({
                     </TabsContent>
                   </Tabs>
                 </CardContent>
-              </Card>
+              </div>
             </div>
           </div>
         </div>

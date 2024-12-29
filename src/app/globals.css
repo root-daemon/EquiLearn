@@ -195,7 +195,6 @@ html, body {
   }
 }
 .prose {
-  max-width: 65ch;
   color: inherit;
 }
 .prose a {
