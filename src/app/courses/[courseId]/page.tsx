@@ -26,16 +26,31 @@ export default function CoursePage({
 
   const courseId = React.use(params).courseId;
 
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, error, isLoading } = useSWR(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/subjects/${email}/${courseId}`,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-      dedupingInterval: 3600000, // 1 hour
+
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/subjects/${email}/${courseId}`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+        setData(result);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (email && courseId) {
+      fetchData();
     }
-  );
+  }, [email, courseId]);
 
   const handleQuizAnswer = (questionIndex: number, answerIndex: number) => {
     setQuizAnswers((prev) => {
@@ -46,7 +61,7 @@ export default function CoursePage({
   };
 
   if (error) return <div>Failed to load</div>;
-
+  console.log("data",data);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const course = data
     ? {
@@ -54,20 +69,13 @@ export default function CoursePage({
         description: data.subject.description,
         lessons: data.subject.topics.map((topic: string) => ({
           title: topic,
-          flashcards: data.study_material.flashcards,
-          notes: data.study_material.notes,
-          quiz: data.study_material.quiz.map((q: any) => ({
-            ...q,
-            answer: q.correct_answer.charCodeAt(0) - 65,
-          })),
         })),
-        videoId: data.video_urls[0]?.split("v=")[1] || "",
       }
     : null;
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
-    console.log(course?.videoId);
+    console.log(course);
   }, [course]);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -232,11 +240,11 @@ export default function CoursePage({
                               }`}
                             >
                               <p className="text-2xl font-semibold text-[#160B38]">
-                                {
+                                {/* {
                                   course?.lessons[selectedLesson].flashcards[
                                     currentCard
                                   ].question
-                                }
+                                } */}
                               </p>
                             </CardContent>
                             <CardContent
@@ -251,11 +259,11 @@ export default function CoursePage({
                               }}
                             >
                               <p className="text-2xl font-semibold text-[#160B38]">
-                                {
+                                {/* {
                                   course?.lessons[selectedLesson].flashcards[
                                     currentCard
                                   ].answer
-                                }
+                                } */}
                               </p>
                             </CardContent>
                           </Card>
@@ -283,7 +291,7 @@ export default function CoursePage({
                       {!isLoading && (
                         <p className="text-center mt-4 text-sm text-[#160B38]/80">
                           Card {currentCard + 1} of{" "}
-                          {course?.lessons[selectedLesson].flashcards.length}
+                          {/* {course?.lessons[selectedLesson].flashcards.length} */}
                         </p>
                       )}
                     </TabsContent>
@@ -350,44 +358,47 @@ export default function CoursePage({
                                 </div>
                               </div>
                             ))
-                        : course?.lessons[selectedLesson].quiz.map(
-                            (question, index) => (
-                              <div key={index} className="space-y-4 mb-8">
-                                <h3 className="font-medium text-lg font-semibold text-[#160B38]">
-                                  {question.question}
-                                </h3>
-                                <div className="space-y-2">
-                                  {question.options.map(
-                                    (option, optionIndex) => (
-                                      <Button
-                                        key={optionIndex}
-                                        variant="outline"
-                                        className={`w-full justify-start items-center transition-all duration-300 ease-in-out ${
-                                          quizAnswers[index] === optionIndex
-                                            ? optionIndex === question.answer
-                                              ? "bg-green-100 text-green-800 border-green-500"
-                                              : "bg-red-100 text-red-800 border-red-500"
-                                            : "hover:bg-clr/10 text-[#160B38] border-clr/20"
-                                        }`}
-                                        onClick={() =>
-                                          handleQuizAnswer(index, optionIndex)
-                                        }
-                                      >
-                                        {option}
-                                        {quizAnswers[index] === optionIndex && (
-                                          <span className="ml-2">
-                                            {optionIndex === question.answer
-                                              ? "✅"
-                                              : "❌"}
-                                          </span>
-                                        )}
-                                      </Button>
-                                    )
-                                  )}
-                                </div>
-                              </div>
-                            )
-                          )}
+                        : 
+                        // course?.lessons[selectedLesson].quiz.map(
+                        //     (question, index) => (
+                        //       <div key={index} className="space-y-4 mb-8">
+                        //         <h3 className="font-medium text-lg font-semibold text-[#160B38]">
+                        //           {question.question}
+                        //         </h3>
+                        //         <div className="space-y-2">
+                        //           {question.options.map(
+                        //             (option, optionIndex) => (
+                        //               <Button
+                        //                 key={optionIndex}
+                        //                 variant="outline"
+                        //                 className={`w-full justify-start items-center transition-all duration-300 ease-in-out ${
+                        //                   quizAnswers[index] === optionIndex
+                        //                     ? optionIndex === question.answer
+                        //                       ? "bg-green-100 text-green-800 border-green-500"
+                        //                       : "bg-red-100 text-red-800 border-red-500"
+                        //                     : "hover:bg-clr/10 text-[#160B38] border-clr/20"
+                        //                 }`}
+                        //                 onClick={() =>
+                        //                   handleQuizAnswer(index, optionIndex)
+                        //                 }
+                        //               >
+                        //                 {option}
+                        //                 {quizAnswers[index] === optionIndex && (
+                        //                   <span className="ml-2">
+                        //                     {optionIndex === question.answer
+                        //                       ? "✅"
+                        //                       : "❌"}
+                        //                   </span>
+                        //                 )}
+                        //               </Button>
+                        //             )
+                        //           )}
+                        //         </div>
+                        //       </div>
+                        //     )
+                        //   )
+                          <></>
+                          }
                     </TabsContent>
                     <TabsContent value="video" className="aspect-video p-0">
                       {isLoading ? (
