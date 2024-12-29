@@ -161,7 +161,7 @@ export default function Dashboard() {
 
         {/* Courses Section */}
         <div className="mb-8">
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-1">
             <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900">
               My Courses
             </h2>

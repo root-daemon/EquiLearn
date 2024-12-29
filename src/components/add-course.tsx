@@ -51,7 +51,7 @@ export function AddCourseModal(email: any) {
             topics: topics,
           },
         ],
-      }
+      },
     );
 
     console.log(response);
@@ -65,13 +65,13 @@ export function AddCourseModal(email: any) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-fit bg-clr/10 text-clr rounded-full hover:bg-clr/15">
+        <Button className="bg-clr/10 hover:bg-clr/15 w-fit rounded-full text-clr">
           Add Courses
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="rounded-2xl sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add New Course</DialogTitle>
+          <DialogTitle className="font-semibold">Add New Course</DialogTitle>
           <DialogDescription>
             Enter the course title and a list of topics for the new course.
           </DialogDescription>
@@ -102,18 +102,18 @@ export function AddCourseModal(email: any) {
                 />
               </div>
             ))}
-            <Button
-              type="button"
-              variant="outline"
-              className="ml-auto"
-              onClick={handleAddTopic}
-            >
-              Add Topic
-            </Button>
+            <div className="flex items-end w-full gap-3">
+              <Button
+                type="button"
+                variant="outline"
+                className="ml-auto rounded-xl"
+                onClick={handleAddTopic}
+              >
+                Add Topic
+              </Button>
+            <Button type="submit" className="rounded-xl bg-clr border-none">Submit</Button>
+            </div>
           </div>
-          <DialogFooter>
-            <Button type="submit">Submit</Button>
-          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>

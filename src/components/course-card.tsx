@@ -31,18 +31,19 @@ const CourseCard = ({
 
   return (
     <Link href={`/courses/${slug}`} className="block relative">
-      <div className="flex flex-col relative justify-start items-start h-[350px] w-[300px] p-5 gap-3 rounded-3xl border bg-white hover:shadow-lg transition-shadow">
+      <div className="flex flex-col relative justify-start items-start min-h-[250px] w-[300px] p-2 gap-3 rounded-3xl border bg-white hover:shadow-lg transition-shadow">
         {/* Trash Button */}
         <Trash
-          className="absolute top-56 right-4 text-gray-600 hover:text-red-500 cursor-pointer z-10"
+          className="absolute top-56 text-sm right-4 text-gray-600 hover:text-red-500 cursor-pointer z-10"
           onClick={(e) => {
             e.preventDefault(); // Prevent navigation
             e.stopPropagation(); // Stop event propagation
             deleteFunction();
           }}
+          size={16}
         />
         {/* Image */}
-        <div className="h-[60%] w-full rounded-3xl border">
+        <div className="h-[60%] w-full rounded-3xl mb-3 border">
           <img
             src={image}
             alt=""
@@ -50,9 +51,9 @@ const CourseCard = ({
           />
         </div>
         {/* Title */}
-        <div className="flex w-full justify-between items-start">
+        <div className="flex w-full p-3 flex-col justify-between items-start">
           <h1 className="text-xl font-semibold">{title}</h1>
-        </div>
+        
         {/* Topics */}
         <div className="flex flex-col gap-0">
           {topics.map((topic, idx) => (
@@ -60,6 +61,7 @@ const CourseCard = ({
               {topic}
             </p>
           ))}
+        </div>
         </div>
       </div>
     </Link>

@@ -104,8 +104,8 @@ export default function CoursePage({
       }}
     >
       <div className="min-h-screen w-full bg-white text-[#160B38] p-6">
-        <div className="max-w-7xl mx-auto space-y-8">
-          <div className="flex justify-between items-center">
+        <div className="space-y-8">
+          <div className="flex justify-between items-center m-12">
             <div>
               <Link
                 href="/"
@@ -124,11 +124,9 @@ export default function CoursePage({
           </div>
 
           <div className="grid lg:grid-cols-[300px_1fr] gap-8">
-            <Card className="bg-white border border-clr/20 shadow-lg rounded-xl h-fit">
-              <CardHeader className="bg-clr text-white rounded-t-xl">
-                <CardTitle>Lessons</CardTitle>
-              </CardHeader>
-              <CardContent className="p-4">
+            <div className="bg-white p-4 border-r border-clr/20 h-fit">
+              <h2 className="m-3 text-2xl font-bold">Lessons</h2>
+              <div className="p-4">
                 <ScrollArea className="h-[500px] pr-4">
                   <div className="space-y-2">
                     {isLoading
@@ -158,8 +156,8 @@ export default function CoursePage({
                         ))}
                   </div>
                 </ScrollArea>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
             <div className="space-y-8">
               <Card className="overflow-hidden bg-white border border-clr/20 shadow-lg">
