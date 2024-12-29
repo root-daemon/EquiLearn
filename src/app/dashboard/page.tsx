@@ -107,7 +107,7 @@ const Home = () => {
         </Button>
       </div>
       {/* my courses */}
-      <div className="flex justify-between items-center w-full ">
+      <div className="flex justify-start items-start w-full ">
         <h1 className="text-2xl font-bold">My Courses</h1>
         <AddCourseModal email={email} />
       </div>

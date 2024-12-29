@@ -160,7 +160,7 @@ export default function Dashboard() {
         </Card>
 
         {/* Courses Section */}
-        <div className="mb-8">
+        <div className="mb-8 flex items-start justify-start">
           <div className="flex justify-between items-center mb-1">
             <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900">
               My Courses
