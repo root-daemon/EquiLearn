@@ -25,11 +25,11 @@ html, body {
 .low-vision {
   font-size: 2em;
   line-height: 2;
-  background-color: #000;
-  color: #fff;
+  background-color: #fff;
+  color: #000 !important;
   padding: 20px;
   border: 4px solid #ffff00;
-  text-shadow: 2px 2px 0 #000;
+  /* text-shadow: 1px 1px 0 #000; */
   box-shadow: 0 0 15px rgba(255,255,0,0.3);
   margin: 10px;
   letter-spacing: 0.05em;
