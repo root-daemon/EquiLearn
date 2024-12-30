@@ -219,7 +219,7 @@ export default function CoursePage({
                         <div className="flex items-center justify-between space-x-4">
                           <Skeleton className="h-10 w-10 rounded-full" />
                           <Card className="min-h-[300px] flex-1">
-                            <CardContent className="flex h-[300px] flex-col gap-4 items-center justify-center">
+                            <CardContent className="flex h-[300px] flex-col items-center justify-center gap-4">
                               <Skeleton className="h-6 w-3/4" />
                               <Skeleton className="h-6 w-1/4" />
                             </CardContent>
@@ -310,69 +310,75 @@ export default function CoursePage({
                             <Skeleton className="mb-2 h-4 w-full" />
                             <Skeleton className="h-4 w-2/3" />
                           </>
-                        ) : notes && (
-                          <>
-                          <div className="flex justify-end mb-4">
-                            <Button
-                              onClick={() => {
-                                const utterance = new SpeechSynthesisUtterance(notes);
-                                window.speechSynthesis.speak(utterance);
-                              }}
-                              className="bg-clr text-white hover:bg-clr/90"
-                            >
-                              🔊
-                            </Button>
-                          </div>
-                          <ReactMarkdown
-                            remarkPlugins={[remarkGfm]}
-                            components={{
-                              h1: ({ node, ...props }) => (
-                                <h1
-                                  className="my-2 border-b border-gray-500 text-5xl font-extrabold"
-                                  {...props}
-                                />
-                              ),
-                              h2: ({ node, ...props }) => (
-                                <h2
-                                  className="mb-3 text-3xl font-bold"
-                                  {...props}
-                                />
-                              ),
-                              h3: ({ node, ...props }) => (
-                                <h3 className="text-2xl font-bold" {...props} />
-                              ),
-                              p: ({ node, ...props }) => (
-                                <p className="mb-4 ml-1" {...props} />
-                              ),
-                              ul: ({ node, ...props }) => (
-                                <ul
-                                  className="ml-2 list-inside list-disc pl-2"
-                                  {...props}
-                                />
-                              ),
-                              ol: ({ node, ...props }) => (
-                                <ol
-                                  className="ml-2 list-inside list-decimal pl-2"
-                                  {...props}
-                                />
-                              ),
-                              blockquote: ({ node, ...props }) => (
-                                <blockquote
-                                  className="border-l-4 border-gray-300 pl-4 italic"
-                                  {...props}
-                                />
-                              ),
-                              code: ({ node, ...props }) => (
-                                <code
-                                  className="rounded bg-gray-100 p-1"
-                                  {...props}
-                                />
-                              ),
-                            }}
-                          >
-                            {notes}
-                          </ReactMarkdown>
-                          </>
+                        ) : (
+                          notes && (
+                            <>
+                              <div className="mb-4 flex justify-end">
+                                <Button
+                                  onClick={() => {
+                                    const utterance =
+                                      new SpeechSynthesisUtterance(notes);
+                                    window.speechSynthesis.speak(utterance);
+                                  }}
+                                  className="hover:bg-clr/90 bg-clr text-white"
+                                >
+                                  🔊
+                                </Button>
+                              </div>
+                              <ReactMarkdown
+                                remarkPlugins={[remarkGfm]}
+                                components={{
+                                  h1: ({ node, ...props }) => (
+                                    <h1
+                                      className="my-2 border-b border-gray-500 text-5xl font-extrabold"
+                                      {...props}
+                                    />
+                                  ),
+                                  h2: ({ node, ...props }) => (
+                                    <h2
+                                      className="mb-3 text-3xl font-bold"
+                                      {...props}
+                                    />
+                                  ),
+                                  h3: ({ node, ...props }) => (
+                                    <h3
+                                      className="text-2xl font-bold"
+                                      {...props}
+                                    />
+                                  ),
+                                  p: ({ node, ...props }) => (
+                                    <p className="mb-4 ml-1" {...props} />
+                                  ),
+                                  ul: ({ node, ...props }) => (
+                                    <ul
+                                      className="ml-2 list-inside list-disc pl-2"
+                                      {...props}
+                                    />
+                                  ),
+                                  ol: ({ node, ...props }) => (
+                                    <ol
+                                      className="ml-2 list-inside list-decimal pl-2"
+                                      {...props}
+                                    />
+                                  ),
+                                  blockquote: ({ node, ...props }) => (
+                                    <blockquote
+                                      className="border-l-4 border-gray-300 pl-4 italic"
+                                      {...props}
+                                    />
+                                  ),
+                                  code: ({ node, ...props }) => (
+                                    <code
+                                      className="rounded bg-gray-100 p-1"
+                                      {...props}
+                                    />
+                                  ),
+                                }}
+                              >
+                                {notes}
+                              </ReactMarkdown>
+                            </>
+                          )
                         )}
                       </div>{" "}
                     </TabsContent>
