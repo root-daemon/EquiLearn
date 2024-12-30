@@ -16,6 +16,7 @@ import { SWRConfig } from "swr";
 import { useCourseState } from "@/lib/courseState";
 import { textToMorse } from "@/lib/morse";
 import { Lesson, QuizQuestion, MarkdownComponentProps } from '@/types/Course';
+import { fetchYouTubeVideoId } from '@/lib/youtube';
 
 export default function CoursePage({
   params,
@@ -32,6 +33,9 @@ export default function CoursePage({
   const [quizAnswers, setQuizAnswers] = useState<number[]>([]);
   const [email, setEmail] = useState<string | undefined>();
   const [morse, setMorse] = useState<string | undefined>();
+  const [videoId, setVideoId] = useState<string | undefined>();
+
+  
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any>(null);
@@ -52,6 +56,12 @@ export default function CoursePage({
         }
         const result = await response.json();
         setData(result);
+        
+        // Fetch YouTube video ID
+        if (result.subject.name) {
+          const videoId = await fetchYouTubeVideoId(result.subject.name);
+          setVideoId(videoId);
+        }
       } catch (err: unknown) {
         setError(err instanceof Error ? err : new Error('Unknown error occurred'));
       } finally {
@@ -93,7 +103,6 @@ export default function CoursePage({
           title: topic,
         })),
         // If you have a videoId in your data...
-        videoId: data.subject.videoId || null,
       }
     : null;
 
@@ -431,7 +440,7 @@ export default function CoursePage({
                                     const isSelected =
                                       quizAnswers[index] === optionIndex;
                                     const isCorrect =
-                                      optionIndex === question.correct_answer;
+                                      optionIndex === ['A', 'B', 'C', 'D'].indexOf(question.correct_answer);
 
                                     return (
                                       <Button
@@ -468,11 +477,11 @@ export default function CoursePage({
                     <TabsContent value="video" className="aspect-video p-0">
                       {isLoading ? (
                         <div className="h-full w-full animate-pulse bg-gray-200" />
-                      ) : course?.videoId ? (
+                      ) : videoId ? (
                         <iframe
                           width="100%"
                           height="100%"
-                          src={`https://www.youtube.com/embed/${course.videoId}`}
+                          src={`https://www.youtube.com/embed/${videoId}`}
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
                           title={`Video for ${course.title}`}
