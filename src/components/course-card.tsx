@@ -20,7 +20,7 @@ const CourseCard = ({
   const deleteFunction = async () => {
     try {
       const response = await axios.delete(
-        `/subjects/${email}/${slug}`
+        `/api/subjects/${email}/${slug}`
       );
       console.log("Course deleted:", response.data);
       window.location.reload(); // Force page reload

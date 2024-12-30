@@ -42,7 +42,7 @@ export default function CoursePage({
 
       try {
         const response = await fetch(
-          `/subjects/${email}/${courseId}`,
+          `/api/subjects/${email}/${courseId}`,
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");

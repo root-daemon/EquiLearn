@@ -30,7 +30,7 @@ const Home = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `/subjects/subjects`,
+        `/api/subjects/subjects`,
         {
           params: {
             email: email,
