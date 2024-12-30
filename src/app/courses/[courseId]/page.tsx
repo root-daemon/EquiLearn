@@ -14,6 +14,8 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { SWRConfig } from "swr";
 import { useCourseState } from "@/lib/courseState";
+import { textToMorse } from "@/lib/morse";
+import { Lesson, QuizQuestion, MarkdownComponentProps } from '@/types/Course';
 
 export default function CoursePage({
   params,
@@ -29,6 +31,7 @@ export default function CoursePage({
   const [currentCard, setCurrentCard] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState<number[]>([]);
   const [email, setEmail] = useState<string | undefined>();
+  const [morse, setMorse] = useState<string | undefined>();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any>(null);
@@ -42,15 +45,15 @@ export default function CoursePage({
 
       try {
         const response = await fetch(
-          `/api/subjects/${email}/${courseId}`,
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/subjects/${email}/${courseId}`,
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         const result = await response.json();
         setData(result);
-      } catch (err: any) {
-        setError(err);
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err : new Error('Unknown error occurred'));
       } finally {
         setIsLoadingData(false);
       }
@@ -160,7 +163,7 @@ export default function CoursePage({
                             className="h-10 w-full rounded-md"
                           />
                         ))
-                      : course?.lessons?.map((lesson: any, index: number) => (
+                      : course?.lessons?.map((lesson: Lesson, index: number) => (
                           <Button
                             key={index}
                             variant={
@@ -324,50 +327,66 @@ export default function CoursePage({
                                 >
                                   🔊
                                 </Button>
+                                <Button
+                                  onClick={async () => {
+                                    try {
+                                      if(morse) {
+                                        setMorse(undefined)
+                                      } else {
+                                        setMorse(textToMorse(notes))
+                                      }
+                                    } catch (err) {
+                                      console.error('Error playing morse sound:', err);
+                                    }
+                                  }}
+                                  className="hover:bg-clr/90 bg-white border border-gray-300/10 text-black ml-2"
+                                >
+                                  {morse ? "Morse" : "Text"}
+                                </Button>
                               </div>
                               <ReactMarkdown
                                 remarkPlugins={[remarkGfm]}
                                 components={{
-                                  h1: ({ node, ...props }) => (
+                                  h1: (props: MarkdownComponentProps) => (
                                     <h1
                                       className="my-2 border-b border-gray-500 text-5xl font-extrabold"
                                       {...props}
                                     />
                                   ),
-                                  h2: ({ node, ...props }) => (
+                                  h2: (props: MarkdownComponentProps) => (
                                     <h2
                                       className="mb-3 text-3xl font-bold"
                                       {...props}
                                     />
                                   ),
-                                  h3: ({ node, ...props }) => (
+                                  h3: (props: MarkdownComponentProps) => (
                                     <h3
                                       className="text-2xl font-bold"
                                       {...props}
                                     />
                                   ),
-                                  p: ({ node, ...props }) => (
+                                  p: (props: MarkdownComponentProps) => (
                                     <p className="mb-4 ml-1" {...props} />
                                   ),
-                                  ul: ({ node, ...props }) => (
+                                  ul: (props: MarkdownComponentProps) => (
                                     <ul
                                       className="ml-2 list-inside list-disc pl-2"
                                       {...props}
                                     />
                                   ),
-                                  ol: ({ node, ...props }) => (
+                                  ol: (props: MarkdownComponentProps) => (
                                     <ol
                                       className="ml-2 list-inside list-decimal pl-2"
                                       {...props}
                                     />
                                   ),
-                                  blockquote: ({ node, ...props }) => (
+                                  blockquote: (props: MarkdownComponentProps) => (
                                     <blockquote
                                       className="border-l-4 border-gray-300 pl-4 italic"
                                       {...props}
                                     />
                                   ),
-                                  code: ({ node, ...props }) => (
+                                  code: (props: MarkdownComponentProps) => (
                                     <code
                                       className="rounded bg-gray-100 p-1"
                                       {...props}
@@ -375,7 +394,7 @@ export default function CoursePage({
                                   ),
                                 }}
                               >
-                                {notes}
+                                {morse ? morse : notes}
                               </ReactMarkdown>
                             </>
                           )
@@ -401,7 +420,7 @@ export default function CoursePage({
                               </div>
                             </div>
                           ))
-                        : quiz.map((question: any, index: number) => (
+                        : quiz.map((question: QuizQuestion, index: number) => (
                             <div key={index} className="mb-8 space-y-4">
                               <h3 className="text-lg font-medium font-semibold text-[#160B38]">
                                 {question.question}
@@ -412,7 +431,7 @@ export default function CoursePage({
                                     const isSelected =
                                       quizAnswers[index] === optionIndex;
                                     const isCorrect =
-                                      optionIndex === question.correctAnswer;
+                                      optionIndex === question.correct_answer;
 
                                     return (
                                       <Button
@@ -443,6 +462,7 @@ export default function CoursePage({
                             </div>
                           ))}{" "}
                     </TabsContent>
+
 
                     {/* Video */}
                     <TabsContent value="video" className="aspect-video p-0">

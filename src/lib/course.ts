@@ -7,7 +7,7 @@ interface GenerateTaskParams {
 
 async function generateTask(params: GenerateTaskParams) {
     try {
-        const response = await fetch(`/api/generator/generate-task`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/generator/generate-task`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

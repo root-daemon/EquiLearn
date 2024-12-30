@@ -11,8 +11,14 @@ const FREQ = {
   DASH: 800,
 } as const;
 
-async function playMorseSound(pattern: string): Promise<void> {
-  const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+type AudioContextType = typeof AudioContext | typeof webkitAudioContext;
+
+export async function playMorseSound(pattern: string): Promise<void> {
+  const AudioContextClass = (window.AudioContext || 
+    window.webkitAudioContext) as AudioContextType;
+  const audioContext = new AudioContextClass();
+  
+  await audioContext.resume();
   
   const playTone = async (freq: number, duration: number) => {
     const oscillator = audioContext.createOscillator();
@@ -23,6 +29,8 @@ async function playMorseSound(pattern: string): Promise<void> {
     
     oscillator.frequency.value = freq;
     oscillator.type = 'sine';
+    
+    gain.gain.value = 0.5;
     
     oscillator.start();
     await new Promise(resolve => setTimeout(resolve, duration));
