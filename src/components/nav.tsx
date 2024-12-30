@@ -8,8 +8,8 @@ export function Nav() {
         Equilearn
       </Link>
       <div className="flex items-center gap-6">
-        <Link href="#features" className="text-sm font-medium hover:underline">
-          Features
+        <Link href="/subscription" className="text-sm font-medium hover:underline">
+          Subscription
         </Link>
 
         <Button variant="outline" className="bg-clr text-white font-semibold rounded-xl border-none">
