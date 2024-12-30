@@ -3,10 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "fastapi-dev": "pip3 install -r server/requirements.txt && python3 -m uvicorn server.app:app --reload",
     "dev": "next dev",
-    "next-start": "next start",
-    "start": "concurrently \"npm run next-start\" \"npm run fastapi-dev\"",
+    "start": "next start",
     "build": "next build",
     "lint": "next lint",
     "postinstall": "prisma generate"
