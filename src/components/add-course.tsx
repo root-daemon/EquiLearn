@@ -41,7 +41,7 @@ export function AddCourseModal(email: any) {
     console.log(topics);
 
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/subjects/create`,
+      `/subjects/create`,
       {
         email: email.email,
         subjects: [

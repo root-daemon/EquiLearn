@@ -42,7 +42,7 @@ export default function CoursePage({
 
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/subjects/${email}/${courseId}`,
+          `/subjects/${email}/${courseId}`,
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");

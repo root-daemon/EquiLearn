@@ -30,7 +30,7 @@ const Home = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/subjects/subjects`,
+        `/subjects/subjects`,
         {
           params: {
             email: email,
