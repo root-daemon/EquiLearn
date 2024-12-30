@@ -310,13 +310,25 @@ export default function CoursePage({
                             <Skeleton className="mb-2 h-4 w-full" />
                             <Skeleton className="h-4 w-2/3" />
                           </>
-                        ) : (
+                        ) : notes && (
+                          <>
+                          <div className="flex justify-end mb-4">
+                            <Button
+                              onClick={() => {
+                                const utterance = new SpeechSynthesisUtterance(notes);
+                                window.speechSynthesis.speak(utterance);
+                              }}
+                              className="bg-clr text-white hover:bg-clr/90"
+                            >
+                              🔊
+                            </Button>
+                          </div>
                           <ReactMarkdown
                             remarkPlugins={[remarkGfm]}
                             components={{
                               h1: ({ node, ...props }) => (
                                 <h1
-                                  className="mb-2 border-b border-gray-500 text-5xl font-extrabold"
+                                  className="my-2 border-b border-gray-500 text-5xl font-extrabold"
                                   {...props}
                                 />
                               ),
@@ -360,6 +372,7 @@ export default function CoursePage({
                           >
                             {notes}
                           </ReactMarkdown>
+                          </>
                         )}
                       </div>{" "}
                     </TabsContent>
